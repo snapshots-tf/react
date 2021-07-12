@@ -1,16 +1,43 @@
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    padding: 0;
+    margin: 0;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+.user-banner {
+    max-height: 64px;
 }
 
-* {
-  box-sizing: border-box;
+.content-height {
+    min-height: calc(100% - 0.5rem);
+}
+
+.item-image {
+    background-repeat: no-repeat;
+    background-size: 2.8rem 2.8rem;
+    background-position: center;
+}
+
+.fast-transition {
+    transition: 0.2s;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.head-back-button {
+    position: absolute;
+}
+
+.kofi {
+    border: 0px;
+    height: 36px;
+}
+
+.donate-button {
+    height: 36px;
+    width: 150px;
 }

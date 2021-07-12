@@ -1,3 +1,6 @@
 module.exports = {
-  reactStrictMode: true,
-}
+    reactStrictMode: true,
+    images: {
+        domains: ['steamcdn-a.akamaihd.net', 'cdn.ko-fi.com'],
+    },
+};
