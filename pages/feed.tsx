@@ -45,8 +45,8 @@ export default function Home() {
                 addManySnapshots(snapshotGroup);
                 snapshotGroup = [];
             }
-        }, 5000);
-    }, []);
+        }, 1000);
+    }, [addManySnapshots]);
 
     return (
         <Sidenav>
