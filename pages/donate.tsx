@@ -57,6 +57,7 @@ export default function Donate() {
                         Donation Leaderboards
                     </p>
                     <ul className="text-lg">
+                        <li>Sunjar - 15 keys</li>
                         <li>Idinium - 10 keys</li>
                         <li>AJ - 10 keys</li>
                     </ul>
