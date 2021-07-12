@@ -23,9 +23,9 @@ function Page() {
     if (!data) return <div>loading...</div>;
 
     const stats = [
-        { name: 'Total Listings', stat: data.listings, icon: UserIcon },
+        { name: 'Total Listings', stat: data.listings, icon: AnnotationIcon },
         { name: 'Total Snapshots', stat: data.snapshots, icon: BookOpenIcon },
-        { name: 'Total Users', stat: data.users, icon: AnnotationIcon },
+        { name: 'Total Users', stat: data.users, icon: UserIcon },
     ];
 
     return (
@@ -51,6 +51,7 @@ function Page() {
                             </div>
                             <dd className="mt-1 text-3xl font-semibold text-gray-100">
                                 <CountUp
+                                    delay={0.1}
                                     end={item.stat}
                                     duration={4}
                                     formattingFn={(num) =>
