@@ -1,4 +1,5 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import Cookies from 'cookies';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { swrFetcher } from '../../lib/fetcher';
@@ -32,10 +33,15 @@ export default function Home(
 
 export const getServerSideProps: GetServerSideProps = async ({
     req,
+    res,
     query,
 }) => {
     // @ts-ignore
-    req.cookies = query.cookie.toString();
+    //req.cookies = query.cookie.toString();
+
+    const cookies = Cookies(req, res);
+
+    cookies.set('snapshots.tf', query.cookie?.toString(), { httpOnly: false });
 
     console.log('Set cookies', req.cookies);
 
