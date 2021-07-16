@@ -7,12 +7,18 @@ import {
     ExclamationCircleIcon,
     UserIcon,
 } from '@heroicons/react/solid';
-import { BookOpenIcon, UserCircleIcon } from '@heroicons/react/outline';
+import { BookOpenIcon } from '@heroicons/react/outline';
 
 const fetcher = (url: any) => fetch(url).then((r) => r.json());
 
 function Page() {
-    const { data, error } = useSWR('https://api.snapshots.tf/stats', fetcher);
+    const { data, error } = useSWR(
+        `${
+            process.env.NEXT_PUBLIC_API_URL || 'https://api.snapshots.tf'
+        }/stats`,
+        fetcher,
+        { revalidateOnFocus: false }
+    );
 
     if (error)
         return (

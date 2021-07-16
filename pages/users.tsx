@@ -5,10 +5,10 @@ import Sidenav from '../components/Sidenav';
 
 export default function Donate() {
     return (
-        <Sidenav>
+        <div>
             <Alert alert={{ type: 'info', icon: ShieldExclamationIcon }}>
                 This page is currently in the works 😭
             </Alert>
-        </Sidenav>
+        </div>
     );
 }

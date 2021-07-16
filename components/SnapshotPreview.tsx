@@ -1,6 +1,7 @@
 import { CSSProperties } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { getImageStyles } from '../lib/helpers';
 
 export interface Snapshot {
     image: {
@@ -17,18 +18,12 @@ export interface Snapshot {
 }
 
 export default function SnapshotPreview({ snapshot }: { snapshot: Snapshot }) {
-    const ImageStyles: CSSProperties = {
-        backgroundImage: 'url("' + snapshot.image.effect + '")',
-    };
-
-    const EmptyStyle: CSSProperties = {};
-
     return (
         <Link href={'/snapshot/' + snapshot.id}>
             <a className="p-2 cursor-pointer flex flex-wrap rounded-md shadow-sm hover:bg-gray-900 fast-transition">
                 <div
                     className="item-image"
-                    style={snapshot.image.effect ? ImageStyles : EmptyStyle}
+                    style={getImageStyles(snapshot.image.effect)}
                 >
                     <Image
                         src={snapshot.image.large}

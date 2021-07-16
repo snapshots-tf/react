@@ -1,15 +1,7 @@
-import {
-    CheckIcon,
-    PencilAltIcon,
-    ThumbUpIcon,
-    UserIcon,
-} from '@heroicons/react/solid';
+import { PencilAltIcon } from '@heroicons/react/solid';
+import { classNames } from '../lib/helpers';
 import { timeSince } from '../lib/time';
 import { APIUser } from '../pages/user/[identifier]';
-
-function classNames(...classes: any) {
-    return classes.filter(Boolean).join(' ');
-}
 
 export default function NameFeed({ user }: { user: APIUser }) {
     const timeline = user.names.map((name) => {

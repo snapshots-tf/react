@@ -13,16 +13,16 @@ export default function Home() {
     let [connected, changeConnected] = useState<Boolean>(false);
     let [snapshots, changeSnapshots] = useState<Snapshot[]>([]);
 
-    const addManySnapshots = (snapshotsArray: Snapshot[]) => {
-        const copy = [...snapshots];
-        for (let i = 0; i < snapshotsArray.length; i++) {
-            copy.unshift(snapshotsArray[i]);
-        }
-        changeSnapshots(copy);
-    };
-
     useEffect(() => {
         let snapshotGroup: Snapshot[] = [];
+
+        const addManySnapshots = (snapshotsArray: Snapshot[]) => {
+            const copy = [...snapshots];
+            for (let i = 0; i < snapshotsArray.length; i++) {
+                copy.unshift(snapshotsArray[i]);
+            }
+            changeSnapshots(copy);
+        };
 
         const socket = io('https://api.snapshots.tf/');
 
@@ -46,10 +46,10 @@ export default function Home() {
                 snapshotGroup = [];
             }
         }, 1000);
-    }, [addManySnapshots]);
+    }, [changeSnapshots, snapshots]);
 
     return (
-        <Sidenav>
+        <div>
             <SEO
                 title="Feed - Snapshots.TF"
                 description="Get a feed of the snapshotting work we do, right in your browser!"
@@ -76,6 +76,6 @@ export default function Home() {
                     );
                 })}
             </div>
-        </Sidenav>
+        </div>
     );
 }

@@ -2,15 +2,14 @@ import { ExclamationCircleIcon } from '@heroicons/react/solid';
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { CSSProperties } from 'react';
+import { CSSProperties, FunctionComponent } from 'react';
 
 import SEO from '../../components/SEO';
-import Sidenav from '../../components/Sidenav';
+import Item from '../../components/Item';
 
 import SnapshotListing from '../../components/SnapshotListing';
+import { getImageStyles } from '../../lib/helpers';
 import { timeSince } from '../../lib/time';
-
-const fetcher = (url: any) => fetch(url).then((r) => r.json());
 
 export default function Identifier({
     snapshot,
@@ -34,10 +33,11 @@ export default function Identifier({
             effect: string;
         };
         sku: string;
+        quality: number;
     };
 }) {
     return (
-        <Sidenav>
+        <div>
             <SEO
                 title={'Snapshots for ' + item.name + ' - Snapshots.TF'}
                 description={`Have you ever dreamed of getting to know what backpack.tf listings looked like for ${
@@ -58,6 +58,7 @@ export default function Identifier({
                     name={item.name}
                     image={item.image}
                     savedAt={snapshot.savedAt}
+                    quality={item.quality}
                 ></SnapshotHeader>
             </div>
 
@@ -93,25 +94,16 @@ export default function Identifier({
                     })}
                 </div>
             </div>
-        </Sidenav>
+        </div>
     );
 }
 
-function SnapshotHeader({
-    name,
-    image,
-    savedAt,
-}: {
+const SnapshotHeader: FunctionComponent<{
     name: string;
     image: { effect?: string; large: string; small: string };
     savedAt: number;
-}) {
-    const ImageStyles: CSSProperties = {
-        backgroundImage: 'url("' + image.effect + '")',
-    };
-
-    const EmptyStyle: CSSProperties = {};
-
+    quality: number;
+}> = ({ name, image, savedAt, quality }) => {
     return (
         <div className="flex flex-wrap justify-center gap-2">
             <div className="flex-center">
@@ -126,36 +118,34 @@ function SnapshotHeader({
                     </p>
                 </div>
             </div>
-            <div
-                style={image.effect ? ImageStyles : EmptyStyle}
-                className="rounded-full h-20 w-20 bg-gray-900 shadow-sm p-1 item-image flex-center"
-            >
-                <Image
-                    src={image.large}
-                    width="64"
-                    height="64"
-                    alt="Item Image"
-                />
+            <div style={getImageStyles(image.effect)} className="flex-center">
+                <Item quality={quality} image={image} />
             </div>
         </div>
     );
-}
+};
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { identifier } = context.query;
 
     const snapshot = await fetch(
-        `https://api.snapshots.tf/snapshot/id/${identifier}`
+        `${
+            process.env.NEXT_PUBLIC_API_URL || 'https://api.snapshots.tf'
+        }/snapshot/id/${identifier}`
     ).then((res) => res.json());
 
     if (snapshot.error) return { notFound: true };
 
     const item = await fetch(
-        `https://api.snapshots.tf/item-info/${snapshot.sku}`
+        `${
+            process.env.NEXT_PUBLIC_API_URL || 'https://api.snapshots.tf'
+        }/item-info/${snapshot.sku}`
     ).then((res) => res.json());
 
     const users = await fetch(
-        `https://api.snapshots.tf/users/snapshot/${snapshot.id}`
+        `${
+            process.env.NEXT_PUBLIC_API_URL || 'https://api.snapshots.tf'
+        }/users/snapshot/${snapshot.id}`
     )
         .then((res) => res.json())
         .then((res) => res.users);
@@ -177,7 +167,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
         props: {
             snapshot,
-            item,
+            item: Object.assign(item, { quality: item.sku.split(';')[1] }),
             listings: {
                 buy: snapshot.listings
                     .filter((listing: { buying: boolean }) => listing.buying)

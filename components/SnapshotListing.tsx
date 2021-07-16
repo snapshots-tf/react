@@ -33,7 +33,10 @@ export default function SnapshotListing({
                 <a>
                     <div className="flex flex-wrap rounded-lg  p-2 cursor-pointer text-left fast-transition hover:bg-gray-900">
                         <Image
-                            src={listing.user.avatar}
+                            src={
+                                listing.user?.avatar ||
+                                'https://steamuserimages-a.akamaihd.net/ugc/885384897182110030/F095539864AC9E94AE5236E04C8CA7C2725BCEFF/'
+                            }
                             height="64"
                             width="64"
                             className="rounded-lg"
@@ -43,7 +46,7 @@ export default function SnapshotListing({
                         <div className="m-2 text-sm md:text-base">
                             <div>
                                 <span className="font-semibold">
-                                    {listing.user.name}
+                                    {listing.user?.name || 'Unknown-User?'}
                                 </span>{' '}
                                 {selling ? 'selling' : 'buying'} for{' '}
                                 {stringify(listing.currencies)}

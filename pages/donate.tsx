@@ -6,7 +6,7 @@ import SEO from '../components/SEO';
 
 export default function Donate() {
     return (
-        <Sidenav>
+        <div>
             <SEO
                 title="Donate - Snapshots.TF"
                 description="Wish to support Snapshots.TF and it&lsquo;s development? Well
@@ -59,10 +59,10 @@ export default function Donate() {
                     <ul className="text-lg">
                         <li>Sunjar - 15 keys</li>
                         <li>Idinium - 10 keys</li>
-                        <li>AJ - 10 keys</li>
+                        <li>aj - 10 keys</li>
                     </ul>
                 </div>
             </div>
-        </Sidenav>
+        </div>
     );
 }

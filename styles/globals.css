@@ -12,12 +12,6 @@ body {
     min-height: calc(100% - 0.5rem);
 }
 
-.item-image {
-    background-repeat: no-repeat;
-    background-size: 2.8rem 2.8rem;
-    background-position: center;
-}
-
 .fast-transition {
     transition: 0.2s;
 }
@@ -40,4 +34,94 @@ body {
 .donate-button {
     height: 36px;
     width: 150px;
+}
+
+.item {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    text-align: center;
+    display: inline-block;
+    border: solid transparent;
+}
+
+.item img {
+    width: 70px;
+    height: 70px;
+    margin-top: 5px;
+}
+
+.Quality1 {
+    background-color: #2a402f;
+    border-color: #4d7455 !important;
+}
+
+.Quality2 {
+    background-color: #544e2d;
+    border-color: #8d834b !important;
+}
+
+.Quality3 {
+    background-color: #2b3b57;
+    border-color: #476291 !important;
+}
+
+.Quality4 {
+    background-color: #241b05;
+    border-color: #70550f !important;
+}
+
+.Quality5 {
+    background-color: #583471;
+    border-color: #8650ac !important;
+}
+
+.Quality6 {
+    background-color: #a88e00;
+    border-color: gold !important;
+}
+
+.Quality7 {
+    background-color: #497330;
+    border-color: #70b04a !important;
+}
+
+.Quality8 {
+    background-color: #56083f;
+    border-color: #a50f79 !important;
+}
+
+.Quality9 {
+    background-color: #497330;
+    border-color: #70b04a !important;
+}
+
+.Quality10 {
+    background-color: #878787;
+    border-color: #b2b2b2 !important;
+}
+
+.Quality11 {
+    background-color: #8a4620;
+    border-color: #cf6a32 !important;
+}
+
+.Quality12 {
+    background-color: #878787;
+    border-color: #b2b2b2 !important;
+}
+
+.Quality13 {
+    background-color: #0cc880;
+    border-color: #38f3ab !important;
+}
+
+.Quality14 {
+    background-color: #5f0000;
+    border-color: #b60000 !important;
+}
+
+.Quality15 {
+    background-color: #cfcfcf;
+    border-color: #fafafa !important;
 }

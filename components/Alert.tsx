@@ -1,9 +1,6 @@
 import { InformationCircleIcon } from '@heroicons/react/solid';
 import { ReactNode } from 'react';
-
-function classNames(...classes: any) {
-    return classes.filter(Boolean).join(' ');
-}
+import { classNames } from '../lib/helpers';
 
 export default function Alert({
     alert,

@@ -1,4 +1,10 @@
-import { Fragment, ReactNode, useState } from 'react';
+import {
+    Fragment,
+    FunctionComponent,
+    ReactNode,
+    useEffect,
+    useState,
+} from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Dialog, Transition } from '@headlessui/react';
@@ -15,13 +21,26 @@ import {
 
 import SnapshotsLogo from '../public/logo.webp';
 import { useRouter } from 'next/dist/client/router';
+import { classNames } from '../lib/helpers';
 
-function classNames(...classes: any) {
-    return classes.filter(Boolean).join(' ');
-}
-
-export default function Sidenav({ children }: { children: ReactNode }) {
+export default function Sidenav({
+    children,
+    hasCookies,
+}: {
+    children: ReactNode;
+    hasCookies: boolean;
+}) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [user, setUser] = useState<{
+        avatar: string;
+        steamID64: string;
+        name: string;
+    } | null>(null);
+
+    useEffect(() => {
+        if (localStorage.getItem('user') && !user && hasCookies)
+            setUser(JSON.parse(localStorage.getItem('user') || '{}'));
+    }, [user, setUser, hasCookies]);
 
     function GetActivePath(): string {
         const router = useRouter();
@@ -165,6 +184,7 @@ export default function Sidenav({ children }: { children: ReactNode }) {
                                     ))}
                                 </nav>
                             </div>
+                            <UserAvatarBar user={user} />
                         </div>
                     </Transition.Child>
                     <div className="flex-shrink-0 w-14">
@@ -220,6 +240,7 @@ export default function Sidenav({ children }: { children: ReactNode }) {
                                 ))}
                             </nav>
                         </div>
+                        <UserAvatarBar user={user} />
                     </div>
                 </div>
             </div>
@@ -244,3 +265,58 @@ export default function Sidenav({ children }: { children: ReactNode }) {
         </div>
     );
 }
+
+const UserAvatarBar: FunctionComponent<{
+    user: { avatar: string; name: string } | null;
+}> = ({ user }) => {
+    if (!user)
+        return (
+            <div className="flex-shrink-0 flex bg-gray-700 p-4">
+                <div className="flex-shrink-0 w-full group block">
+                    <div className="flex items-center text-white">
+                        <Link href="/auth/login">
+                            <a>Sign In</a>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        );
+
+    return (
+        <div className="flex-shrink-0 flex bg-gray-700 p-4">
+            <div className="flex-shrink-0 w-full group block">
+                <div className="flex items-center">
+                    <div>
+                        <Image
+                            className="inline-block rounded-full"
+                            src={user.avatar}
+                            height="36"
+                            width="36"
+                            alt="User Avatar"
+                        />
+                    </div>
+                    <div className="ml-3">
+                        <p className="text-sm font-medium text-white">
+                            {user?.name}
+                        </p>
+                        <div className="flex text-xs font-medium text-gray-300 group-hover:text-white gap-1">
+                            <a
+                                href={
+                                    (process.env.NEXT_PUBLIC_API_URL ||
+                                        'https://api.snapshots.tf') +
+                                    '/auth/logout'
+                                }
+                            >
+                                Sign Out
+                            </a>
+                            -
+                            <Link href="/profile">
+                                <a>My Profile</a>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};

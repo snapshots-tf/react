@@ -15,7 +15,6 @@ import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 
 import Alert from '../../components/Alert';
-import Sidenav from '../../components/Sidenav';
 import SEO from '../../components/SEO';
 
 import { timeSince } from '../../lib/time';
@@ -77,7 +76,7 @@ export default function Identifier({
     };
 
     return (
-        <Sidenav>
+        <div>
             <SEO
                 title={user.name + "'s Profile - Snapshots.TF"}
                 description="Check this persons profile, it may have some awesome graphs!"
@@ -245,7 +244,7 @@ export default function Identifier({
 
                 <NameFeed user={user}></NameFeed>
             </div>
-        </Sidenav>
+        </div>
     );
 
     function tooltipContent(tooltipProps: TooltipProps<any, any>) {
@@ -268,7 +267,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const { identifier } = context.query;
 
     const userResponse = await fetch(
-        `https://api.snapshots.tf/users/${identifier}`
+        `${
+            process.env.NEXT_PUBLIC_API_URL || 'https://api.snapshots.tf'
+        }/users/${identifier}`
     ).then((res) => res.json());
 
     if (userResponse.error) return { notFound: true };

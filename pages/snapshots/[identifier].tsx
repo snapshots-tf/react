@@ -20,7 +20,7 @@ export default function Identifier({
     snapshots: SnapshotOverview;
 }) {
     return (
-        <Sidenav>
+        <div>
             <SEO
                 title={'Snapshots for ' + snapshots.name + ' - Snapshots.TF'}
                 description="Have you ever dreamed of getting to know what backpack.tf listings looked like 1 month ago? Well here is your chance to see!"
@@ -54,7 +54,7 @@ export default function Identifier({
                     })}
                 </div>
             </div>
-        </Sidenav>
+        </div>
     );
 }
 
@@ -64,7 +64,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     let notFound = false;
 
     const res = await fetch(
-        `https://api.snapshots.tf/snapshots/overview/sku/${identifier}`
+        `${
+            process.env.NEXT_PUBLIC_API_URL || 'https://api.snapshots.tf'
+        }/snapshots/overview/sku/${identifier}`
     ).then((res) => {
         if (res.status > 300) {
             notFound = true;
