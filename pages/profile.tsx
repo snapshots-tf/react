@@ -239,14 +239,18 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
             },
         };
 
-    const cookies = Cookies(req, res);
+    const cookies = req.cookies['snapshots.tf'];
 
-    const [data, userError] = await fetcher(
-        '/me',
-        'GET',
-        false,
-        cookies.get('snapshots.tf')
-    );
+    if (!cookies) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false,
+            },
+        };
+    }
+
+    const [data, userError] = await fetcher('/me', 'GET', false, cookies);
 
     if (userError || data.statusCode === 401) {
         return {
@@ -261,7 +265,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
         `/me/api-key`,
         'GET',
         false,
-        cookies.get('snapshots.tf')
+        cookies
     );
 
     if (apiKeyError || (statusCode && statusCode === 401)) {

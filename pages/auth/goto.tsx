@@ -23,9 +23,7 @@ export default function Home(
         return <p>loading...</p>;
     }
 
-    console.log('', { data, error });
-
-    console.log('Set user');
+    console.log('Set user: ' + data);
     localStorage.setItem('user', JSON.stringify(data));
 
     router.push('/');
@@ -38,12 +36,18 @@ export const getServerSideProps: GetServerSideProps = async ({
     res,
     query,
 }) => {
+    if (!query.cookie) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false,
+            },
+        };
+    }
+
     // @ts-ignore
-    //req.cookies = query.cookie.toString();
-
-    const cookies = Cookies(req, res);
-
-    cookies.set('snapshots.tf', query.cookie?.toString());
+    req.cookies = query.cookie.toString();
+    req.headers.cookie = query.cookie.toString();
 
     return {
         props: {},
