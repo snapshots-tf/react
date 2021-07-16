@@ -2,7 +2,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Cookies from 'cookies';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
-import { swrFetcher } from '../../lib/fetcher';
+import { fetcher, swrFetcher } from '../../lib/fetcher';
 
 export default function Home(
     props: InferGetServerSidePropsType<typeof getServerSideProps>
@@ -23,6 +23,8 @@ export default function Home(
         return <p>loading...</p>;
     }
 
+    console.log('', { data, error });
+
     console.log('Set user');
     localStorage.setItem('user', JSON.stringify(data));
 
@@ -37,13 +39,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     query,
 }) => {
     // @ts-ignore
-    //req.cookies = query.cookie.toString();
-
-    const cookies = Cookies(req, res);
-
-    cookies.set('snapshots.tf', query.cookie?.toString(), { httpOnly: false });
-
-    console.log('Set cookies', req.cookies);
+    req.cookies = query.cookie.toString();
 
     return {
         props: {},

@@ -1,4 +1,5 @@
 import { KeyIcon, TrashIcon } from '@heroicons/react/outline';
+import Cookies from 'cookies';
 import {
     AnnotationIcon,
     RefreshIcon,
@@ -13,6 +14,7 @@ import { FunctionComponent, useEffect, useState } from 'react';
 import Alert from '../components/Alert';
 
 import { fetcher } from '../lib/fetcher';
+import SEO from '../components/SEO';
 
 const Profile: FunctionComponent<{
     user: { avatar: string; name: string; steamID64: string };
@@ -98,6 +100,7 @@ const Profile: FunctionComponent<{
 
     return (
         <div>
+            <SEO title="Profile - Snapshots.TF" description="Your profile!" />
             <div className="flex w-full bg-gray-900 rounded-lg p-2 mb-1">
                 <Image
                     src={user.avatar}
@@ -227,7 +230,7 @@ const Profile: FunctionComponent<{
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     if (!req.cookies)
         return {
             redirect: {
@@ -236,7 +239,14 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
             },
         };
 
-    const [data, userError] = await fetcher('/me', 'GET', false, req.cookies);
+    const cookies = Cookies(req, res);
+
+    const [data, userError] = await fetcher(
+        '/me',
+        'GET',
+        false,
+        cookies.get('snapshots.tf')
+    );
 
     if (userError || data.statusCode === 401) {
         return {
@@ -251,7 +261,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
         `/me/api-key`,
         'GET',
         false,
-        req.cookies
+        cookies.get('snapshots.tf')
     );
 
     if (apiKeyError || (statusCode && statusCode === 401)) {

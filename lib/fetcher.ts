@@ -7,7 +7,7 @@ const fetcher = (
     endpoint: string,
     method = 'GET',
     useCredentials: boolean = true,
-    cookies: NextApiRequestCookies | null = null,
+    cookies: string | null = null,
     snapshotKey: string | null = null
 ) => {
     const url = `${
@@ -22,7 +22,7 @@ const fetcher = (
 
     if (cookies) {
         // @ts-ignore
-        data.headers['cookie'] = 'snapshots.tf=' + cookies['snapshots.tf'];
+        data.headers['cookie'] = 'snapshots.tf=' + cookies;
     }
 
     if (snapshotKey) {
