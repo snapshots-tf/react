@@ -39,7 +39,11 @@ export const getServerSideProps: GetServerSideProps = async ({
     query,
 }) => {
     // @ts-ignore
-    req.cookies = query.cookie.toString();
+    //req.cookies = query.cookie.toString();
+
+    const cookies = Cookies(req, res);
+
+    cookies.set('snapshots.tf', query.cookie?.toString());
 
     return {
         props: {},
