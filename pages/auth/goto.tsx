@@ -1,5 +1,5 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import Cookies from 'cookies';
+import nookies, { parseCookies } from 'nookies';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { fetcher, swrFetcher } from '../../lib/fetcher';
@@ -7,36 +7,37 @@ import { fetcher, swrFetcher } from '../../lib/fetcher';
 export default function Home(
     props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
-    const { data, error } = useSWR(
-        `${process.env.NEXT_PUBLIC_API_URL || 'https://api.snapshots.tf'}/me`,
-        swrFetcher
-    );
+    const cookies = parseCookies();
 
     const router = useRouter();
 
-    if (error) {
-        console.log('failed');
-        return <p>failed</p>;
-    }
-    if (!data) {
-        console.log('loading');
-        return <p>loading...</p>;
-    }
+    fetcher('/me', 'GET', true, cookies['snapshots.tf']).then(
+        ([data, error]) => {
+            if (error) {
+                console.log('failed');
+                return <p>failed</p>;
+            }
+            if (!data) {
+                console.log('loading');
+                return <p>loading...</p>;
+            }
+            try {
+                localStorage.setItem('user', JSON.stringify(data));
 
-    console.log('Set user: ' + data);
-    localStorage.setItem('user', JSON.stringify(data));
+                console.log('Set user: ' + JSON.stringify(data));
+            } catch (err) {}
 
-    router.push('/');
+            router.push('/?profile=true');
 
-    return <span>Redirecting</span>;
+            return <span>Redirecting</span>;
+        }
+    );
+
+    return <span>Fetching</span>;
 }
 
-export const getServerSideProps: GetServerSideProps = async ({
-    req,
-    res,
-    query,
-}) => {
-    if (!query.cookie) {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    if (!ctx.query.cookie) {
         return {
             redirect: {
                 destination: '/',
@@ -45,9 +46,10 @@ export const getServerSideProps: GetServerSideProps = async ({
         };
     }
 
-    // @ts-ignore
-    req.cookies = query.cookie.toString();
-    req.headers.cookie = query.cookie.toString();
+    nookies.set(ctx, 'snapshots.tf', ctx.query.cookie.toString(), {
+        path: '/',
+        maxAge: 1209600000,
+    });
 
     return {
         props: {},

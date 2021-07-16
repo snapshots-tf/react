@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import { FunctionComponent, useState } from 'react';
+import { Notify } from 'notiflix';
 
 import { InformationCircleIcon, RefreshIcon } from '@heroicons/react/outline';
 import { ExclamationCircleIcon } from '@heroicons/react/solid';
 
-import Sidenav from '../components/Sidenav';
 import Alert from '../components/Alert';
 import SnapshotStatistics from '../components/SnapshotStatistics';
 import SEO from '../components/SEO';
@@ -13,9 +13,14 @@ import ItemComponent from '../components/Item';
 
 import { fetcher } from '../lib/fetcher';
 import { useRouter } from 'next/router';
-import { Notify } from 'notiflix';
 
 export default function Home() {
+    const router = useRouter();
+
+    if (router.query.profile && typeof window !== 'undefined') {
+        window.location.href = '/';
+    }
+
     return (
         <div>
             <SEO
