@@ -1,5 +1,5 @@
 import { KeyIcon, TrashIcon } from '@heroicons/react/outline';
-import Cookies from 'cookies';
+import nookies from 'nookies';
 import {
     AnnotationIcon,
     RefreshIcon,
@@ -230,7 +230,9 @@ const Profile: FunctionComponent<{
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const { req, res } = ctx;
+
     if (!req.cookies)
         return {
             redirect: {
@@ -239,7 +241,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
             },
         };
 
-    const cookies = req.cookies['snapshots.tf'];
+    const cookies = nookies.get(ctx);
 
     if (!cookies) {
         return {
@@ -250,7 +252,12 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
         };
     }
 
-    const [data, userError] = await fetcher('/me', 'GET', false, cookies);
+    const [data, userError] = await fetcher(
+        '/me',
+        'GET',
+        false,
+        cookies['snapshots.tf']
+    );
 
     if (userError || data.statusCode === 401) {
         return {
@@ -265,7 +272,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
         `/me/api-key`,
         'GET',
         false,
-        cookies
+        cookies['snapshots.tf']
     );
 
     if (apiKeyError || (statusCode && statusCode === 401)) {
