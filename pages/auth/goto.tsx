@@ -11,6 +11,8 @@ export default function Home(
         swrFetcher
     );
 
+    const router = useRouter();
+
     if (error) {
         console.log('failed');
         return <p>failed</p>;
@@ -22,8 +24,6 @@ export default function Home(
 
     console.log('Set user');
     localStorage.setItem('user', JSON.stringify(data));
-
-    const router = useRouter();
 
     router.push('/');
 
