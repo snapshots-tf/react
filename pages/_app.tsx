@@ -37,9 +37,7 @@ MyApp.getInitialProps = async (context: AppContext) => {
     const appProps = await App.getInitialProps(context);
 
     // @ts-ignore
-    const hasCookies = Cookies(context.ctx.req, context.ctx.res).get(
-        'snapshots.tf'
-    );
+    const hasCookies = true;
 
     return {
         ...appProps,
