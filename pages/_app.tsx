@@ -1,6 +1,8 @@
 import '../styles/globals.css';
 import 'tailwindcss/tailwind.css';
 
+import Cookies from 'cookies';
+
 import App, { AppContext } from 'next/app';
 import type { AppProps } from 'next/app';
 
@@ -34,7 +36,10 @@ function MyApp({
 MyApp.getInitialProps = async (context: AppContext) => {
     const appProps = await App.getInitialProps(context);
 
-    const hasCookies = context.ctx.req?.headers?.cookie !== undefined;
+    // @ts-ignore
+    const hasCookies = Cookies(context.ctx.req, context.ctx.res).get(
+        'snapshots.tf'
+    );
 
     return {
         ...appProps,
