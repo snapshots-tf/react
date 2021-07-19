@@ -17,7 +17,7 @@ export default function Home() {
 
             <div className="pt-2">
                 <div className="flex-center">
-                    <Image src={SadCheems} height="128" width="200" />
+                    <Image src={SadCheems} height="128" width="200" alt="" />
                 </div>
                 <div className="text-center">
                     <h1 className="text-5xl font-bold tracking-wider">
