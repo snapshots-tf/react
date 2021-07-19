@@ -1,4 +1,8 @@
 import { ExclamationCircleIcon } from '@heroicons/react/solid';
+import Image from 'next/image';
+import Link from 'next/link';
+
+import SadCheems from '../public/404.png';
 
 import Alert from '../components/Alert';
 import SEO from '../components/SEO';
@@ -11,9 +15,22 @@ export default function Home() {
                 description="This page does not exist!"
             ></SEO>
 
-            <Alert alert={{ icon: ExclamationCircleIcon, type: 'error' }}>
-                This page does not exist!
-            </Alert>
+            <div className="pt-2">
+                <div className="flex-center">
+                    <Image src={SadCheems} height="128" width="200" />
+                </div>
+                <div className="text-center">
+                    <h1 className="text-5xl font-bold tracking-wider">
+                        404 - Page Not Found
+                    </h1>
+                    <p className="text-lg my-2">How did you end up here?</p>
+                    <Link href="/">
+                        <a className="bg-gray-900 rounded-md shadow-sm p-2 px-3 mt-2 text-lg font-semibold">
+                            Go Home
+                        </a>
+                    </Link>
+                </div>
+            </div>
         </div>
     );
 }

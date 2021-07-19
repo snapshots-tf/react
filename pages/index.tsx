@@ -13,6 +13,7 @@ import ItemComponent from '../components/Item';
 
 import { fetcher } from '../lib/fetcher';
 import { useRouter } from 'next/router';
+import Spinner from '../components/Spinner';
 
 export default function Home() {
     const router = useRouter();
@@ -51,8 +52,12 @@ const SearchComponent: FunctionComponent = () => {
 
     const [hasSearched, changeHasSearched] = useState<boolean>(false);
 
+    const [isSearching, changeIsSearching] = useState<boolean>(false);
+
     const handleSearchChange = async (change: string) => {
         if (change.length < 2) return;
+
+        changeIsSearching(true);
 
         const [data, error] = await fetcher('/search/' + change);
 
@@ -65,6 +70,7 @@ const SearchComponent: FunctionComponent = () => {
                 })
             );
             changeHasSearched(true);
+            changeIsSearching(false);
         } else if (error) {
             changeHasSearched(false);
             changeFailed(true);
@@ -83,6 +89,7 @@ const SearchComponent: FunctionComponent = () => {
                 onChange={handleSearchChange}
                 useTimeout={true}
                 timeoutMS={600}
+                showSpinner={isSearching}
             ></Input>
 
             <div className="mt-3">
@@ -169,7 +176,7 @@ const SearchItemComponent: FunctionComponent<{
                         onClick={getLatestSnapshot}
                     >
                         {fetching ? (
-                            <RefreshIcon className="w-4 h-4 animate-spin" />
+                            <Spinner borderClass="border-gray-50" />
                         ) : (
                             ''
                         )}

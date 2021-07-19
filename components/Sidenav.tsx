@@ -17,6 +17,7 @@ import {
     ChatIcon,
     CodeIcon,
     RssIcon,
+    DatabaseIcon,
 } from '@heroicons/react/outline';
 
 import SnapshotsLogo from '../public/logo.webp';
@@ -72,11 +73,13 @@ export default function Sidenav({
             href: 'https://discord.gg/gDbPDmh7zW',
             icon: ChatIcon,
             current: false,
+            split: 'Community',
         },
         {
             name: 'API',
             href: 'https://api.snapshots.tf/docs',
             icon: CodeIcon,
+            split: 'Dev',
             current: false,
         },
         {
@@ -85,7 +88,15 @@ export default function Sidenav({
             icon: ChartBarIcon,
             current: GetActivePath() === '/users',
         },
-    ];
+        {
+            name: 'Overview',
+            href: '/overview',
+            icon: DatabaseIcon,
+            current: GetActivePath() === '/overview',
+        },
+    ].sort((a, b) => {
+        return (a.split ? 1 : 0) - (b.split ? 1 : 0);
+    });
 
     return (
         <div className="h-screen flex overflow-hidden bg-gray-100">
@@ -160,29 +171,63 @@ export default function Sidenav({
                                 </Link>
                                 <nav className="mt-5 px-2 space-y-1">
                                     {navigation.map((item) => (
-                                        <Link href={item.href} key={item.name}>
-                                            <a
-                                                className={classNames(
-                                                    item.current
-                                                        ? 'bg-gray-900 text-white'
-                                                        : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                                    'group flex items-center px-2 py-2 text-base font-medium rounded-md'
-                                                )}
+                                        <div>
+                                            {item.split ? (
+                                                <div className="space-y-1">
+                                                    <h3
+                                                        className="px-2 text-xs font-semibold text-gray-400 uppercase tracking-wider"
+                                                        id="projects-headline"
+                                                    >
+                                                        {item.split}
+                                                    </h3>
+                                                </div>
+                                            ) : (
+                                                ''
+                                            )}
+
+                                            <Link
+                                                href={item.href}
+                                                key={item.name}
                                             >
-                                                <item.icon
+                                                <a
                                                     className={classNames(
                                                         item.current
-                                                            ? 'text-gray-300'
-                                                            : 'text-gray-400 group-hover:text-gray-300',
-                                                        'mr-4 flex-shrink-0 h-6 w-6'
+                                                            ? 'bg-gray-900 text-white'
+                                                            : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                                        'group flex items-center px-2 py-2 text-base font-medium rounded-md'
                                                     )}
-                                                    aria-hidden="true"
-                                                />
-                                                {item.name}
-                                            </a>
-                                        </Link>
+                                                >
+                                                    <item.icon
+                                                        className={classNames(
+                                                            item.current
+                                                                ? 'text-gray-300'
+                                                                : 'text-gray-400 group-hover:text-gray-300',
+                                                            'mr-4 flex-shrink-0 h-6 w-6'
+                                                        )}
+                                                        aria-hidden="true"
+                                                    />
+                                                    {item.name}
+                                                </a>
+                                            </Link>
+                                        </div>
                                     ))}
                                 </nav>
+                            </div>
+                            <div className="space-y-1 pb-4">
+                                <h3
+                                    className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider"
+                                    id="projects-headline"
+                                >
+                                    Made by{' '}
+                                    <Link href="https://viggo.cc">
+                                        <a>aethez</a>
+                                    </Link>
+                                    <br />
+                                    Powered by{' '}
+                                    <Link href="https://backpack.tf/">
+                                        <a>Backpack.TF</a>
+                                    </Link>
+                                </h3>
                             </div>
                             <UserAvatarBar user={user} />
                         </div>
@@ -216,29 +261,59 @@ export default function Sidenav({
                             </Link>
                             <nav className="mt-5 flex-1 px-2 bg-gray-800 space-y-1">
                                 {navigation.map((item) => (
-                                    <Link href={item.href} key={item.name}>
-                                        <a
-                                            className={classNames(
-                                                item.current
-                                                    ? 'bg-gray-900 text-white'
-                                                    : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                                'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
-                                            )}
-                                        >
-                                            <item.icon
+                                    <div>
+                                        {item.split ? (
+                                            <div className="space-y-1">
+                                                <h3
+                                                    className="px-2 text-xs font-semibold text-gray-400 uppercase tracking-wider"
+                                                    id="projects-headline"
+                                                >
+                                                    {item.split}
+                                                </h3>
+                                            </div>
+                                        ) : (
+                                            ''
+                                        )}
+                                        <Link href={item.href} key={item.name}>
+                                            <a
                                                 className={classNames(
                                                     item.current
-                                                        ? 'text-gray-300'
-                                                        : 'text-gray-400 group-hover:text-gray-300',
-                                                    'mr-3 flex-shrink-0 h-6 w-6'
+                                                        ? 'bg-gray-900 text-white'
+                                                        : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                                    'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
                                                 )}
-                                                aria-hidden="true"
-                                            />
-                                            {item.name}
-                                        </a>
-                                    </Link>
+                                            >
+                                                <item.icon
+                                                    className={classNames(
+                                                        item.current
+                                                            ? 'text-gray-300'
+                                                            : 'text-gray-400 group-hover:text-gray-300',
+                                                        'mr-3 flex-shrink-0 h-6 w-6'
+                                                    )}
+                                                    aria-hidden="true"
+                                                />
+                                                {item.name}
+                                            </a>
+                                        </Link>
+                                    </div>
                                 ))}
                             </nav>
+                            <div className="space-y-1">
+                                <h3
+                                    className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider"
+                                    id="projects-headline"
+                                >
+                                    Made by{' '}
+                                    <Link href="https://viggo.cc">
+                                        <a>aethez</a>
+                                    </Link>
+                                    <br />
+                                    Powered by{' '}
+                                    <Link href="https://backpack.tf/">
+                                        <a>Backpack.TF</a>
+                                    </Link>
+                                </h3>
+                            </div>
                         </div>
                         <UserAvatarBar user={user} />
                     </div>
