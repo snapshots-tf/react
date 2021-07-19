@@ -170,8 +170,8 @@ export default function Sidenav({
                                     </a>
                                 </Link>
                                 <nav className="mt-5 px-2 space-y-1">
-                                    {navigation.map((item) => (
-                                        <div>
+                                    {navigation.map((item, index) => (
+                                        <div key={index}>
                                             {item.split ? (
                                                 <div className="space-y-1">
                                                     <h3
@@ -185,10 +185,7 @@ export default function Sidenav({
                                                 ''
                                             )}
 
-                                            <Link
-                                                href={item.href}
-                                                key={item.name}
-                                            >
+                                            <Link href={item.href}>
                                                 <a
                                                     className={classNames(
                                                         item.current
@@ -260,8 +257,8 @@ export default function Sidenav({
                                 </a>
                             </Link>
                             <nav className="mt-5 flex-1 px-2 bg-gray-800 space-y-1">
-                                {navigation.map((item) => (
-                                    <div>
+                                {navigation.map((item, index) => (
+                                    <div key={index}>
                                         {item.split ? (
                                             <div className="space-y-1">
                                                 <h3
@@ -274,7 +271,7 @@ export default function Sidenav({
                                         ) : (
                                             ''
                                         )}
-                                        <Link href={item.href} key={item.name}>
+                                        <Link href={item.href}>
                                             <a
                                                 className={classNames(
                                                     item.current
