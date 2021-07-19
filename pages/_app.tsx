@@ -1,12 +1,12 @@
 import '../styles/globals.css';
 import 'tailwindcss/tailwind.css';
 
-import Cookies from 'cookies';
-
 import App, { AppContext } from 'next/app';
 import type { AppProps } from 'next/app';
 
+import NextNprogress from 'nextjs-progressbar';
 import Sidenav from '../components/Sidenav';
+
 import { Confirm } from 'notiflix';
 import { useEffect } from 'react';
 
@@ -27,9 +27,18 @@ function MyApp({
     }, []);
 
     return (
-        <Sidenav hasCookies={hasCookies}>
-            <Component {...pageProps} hasCookies={hasCookies} />
-        </Sidenav>
+        <div>
+            <NextNprogress
+                color="#0000ff"
+                startPosition={0}
+                stopDelayMs={200}
+                height={5}
+                showOnShallow={true}
+            />
+            <Sidenav hasCookies={hasCookies}>
+                <Component {...pageProps} hasCookies={hasCookies} />
+            </Sidenav>
+        </div>
     );
 }
 
