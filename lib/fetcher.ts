@@ -30,6 +30,8 @@ const fetcher = (
         data.headers['X-SNAPSHOT-KEY'] = snapshotKey;
     }
 
+    console.log('Request data', data);
+
     return fetch(url, data)
         .then((r) => r.json())
         .then((r) => {
