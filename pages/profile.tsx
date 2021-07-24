@@ -34,7 +34,7 @@ const Profile: FunctionComponent<{
         const [data, error] = await fetcher(
             '/request/' + testDefindex,
             'POST',
-            true,
+            false,
             null,
             apiKey
         );
