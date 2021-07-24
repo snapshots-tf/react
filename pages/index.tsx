@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { FunctionComponent, useState } from 'react';
 import { Notify } from 'notiflix';
 
@@ -38,16 +39,30 @@ export default function Home() {
             </div>
 
             <div className="mt-2">
-                <SearchComponent></SearchComponent>
+                <SearchItemsComponent></SearchItemsComponent>
+            </div>
+
+            <div className="mt-2">
+                <SearchUsersComponent />
             </div>
         </div>
     );
 }
 
-const SearchComponent: FunctionComponent = () => {
-    const [searchResult, changeSearchResult] = useState<
-        { name: string; sku: string; image: any; quality: number }[]
-    >([]);
+const SearchComponent: FunctionComponent<{
+    item: {
+        component: FunctionComponent<{ result: any }>;
+    };
+    endpoint: string;
+    title: string;
+    resultObject: 'users' | 'results';
+    input: {
+        placeholder: string;
+        label: string;
+    };
+    mapFunction?: Function;
+}> = ({ endpoint, item, title, resultObject, input, mapFunction }) => {
+    const [result, changeResult] = useState<any[]>([]);
     const [failed, changeFailed] = useState<boolean>(false);
 
     const [hasSearched, changeHasSearched] = useState<boolean>(false);
@@ -59,15 +74,11 @@ const SearchComponent: FunctionComponent = () => {
 
         changeIsSearching(true);
 
-        const [data, error] = await fetcher('/search/' + change);
+        const [data, error] = await fetcher(endpoint + change);
 
         if (data) {
-            changeSearchResult(
-                data.results.map((item: any) => {
-                    return Object.assign(item, {
-                        quality: item.sku.split(';')[1],
-                    });
-                })
+            changeResult(
+                data[resultObject].map(mapFunction || ((res: any) => res))
             );
             changeHasSearched(true);
             changeIsSearching(false);
@@ -80,12 +91,12 @@ const SearchComponent: FunctionComponent = () => {
     return (
         <div>
             <h1 className="text-xl leading-6 text-white font-semibold">
-                Search Snapshots
+                {title}
             </h1>
 
             <Input
-                label="Item Name"
-                placeholder="Mann Co. Supply Crate Key"
+                label={input.label}
+                placeholder={input.placeholder}
                 onChange={handleSearchChange}
                 useTimeout={true}
                 timeoutMS={600}
@@ -95,7 +106,10 @@ const SearchComponent: FunctionComponent = () => {
             <div className="mt-3">
                 {failed === true ? (
                     <Alert
-                        alert={{ type: 'error', icon: ExclamationCircleIcon }}
+                        alert={{
+                            type: 'error',
+                            icon: ExclamationCircleIcon,
+                        }}
                     >
                         An error occurred whilst trying to search the item.
                     </Alert>
@@ -103,45 +117,134 @@ const SearchComponent: FunctionComponent = () => {
                     <span></span>
                 )}
 
-                {hasSearched && searchResult.length === 0 ? (
+                {hasSearched && result.length === 0 ? (
                     <p>No results found 😭</p>
                 ) : (
                     ''
                 )}
 
                 <div className="flex flex-wrap gap-1">
-                    {searchResult
-                        .sort((a, b) => b.name.length - a.name.length)
-                        .map((result, index) => {
-                            return (
-                                <SearchItemComponent
-                                    key={index}
-                                    quality={result.quality}
-                                    sku={result.sku}
-                                    name={result.name}
-                                    image={result.image}
-                                />
-                            );
-                        })}
+                    {result.map((result, index) => {
+                        return <item.component key={index} result={result} />;
+                    })}
                 </div>
             </div>
         </div>
     );
 };
 
-const SearchItemComponent: FunctionComponent<{
-    sku: string;
-    name: string;
-    quality: number;
-    image: { large: string; effect?: string };
-}> = ({ sku, name, image, quality }) => {
+const UserResult: FunctionComponent<{
+    result: {
+        donations: { time: number; amount: number }[];
+        avatar: string;
+        lastSeen: number;
+        savedAt: number;
+        id: string;
+        name: string;
+        steamID64: string;
+    };
+}> = ({ result }) => {
+    return (
+        <div className="bg-gray-900 shadow-sm rounded-md p-2 text-gray-50 w-64">
+            <div className="flex justify-center pt-2">
+                <Image
+                    src={result.avatar}
+                    width="85"
+                    height="85"
+                    className="rounded-md"
+                />
+            </div>
+
+            <div className="pt-2">
+                <h3 className="text-base sm:text-md lg:text-lg  text-white break-all text-center">
+                    {result.name}
+                </h3>
+            </div>
+
+            <div>
+                <p className="text-center text-base font-light">Profiles</p>
+            </div>
+            <div className="pt-2 flex divide-x divide-gray-800">
+                <div className="w-0 flex-1 flex">
+                    <Link href={'/user/' + result.steamID64}>
+                        <a className="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-300 font-medium border border-transparent rounded-bl-lg hover:text-white cursor-pointer">
+                            <span className="ml-3">Snapshots</span>
+                        </a>
+                    </Link>
+                </div>
+                <div className="-ml-px w-0 flex-1 flex">
+                    <Link
+                        href={
+                            'https://backpack.tf/profiles/' + result.steamID64
+                        }
+                    >
+                        <a className="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-300 font-medium border border-transparent rounded-br-lg hover:text-white cursor-pointer">
+                            <span className="ml-3">BPTF</span>
+                        </a>
+                    </Link>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const SearchUsersComponent: FunctionComponent = () => {
+    return (
+        <SearchComponent
+            item={{
+                component: UserResult,
+            }}
+            title="Users"
+            endpoint="/users/search/"
+            resultObject="users"
+            input={{
+                label: 'Search Users',
+                placeholder: 'aethez',
+            }}
+        />
+    );
+};
+
+const SearchItemsComponent: FunctionComponent = () => {
+    return (
+        <SearchComponent
+            item={{
+                component: ItemResult,
+            }}
+            title="Items"
+            endpoint="/search/"
+            resultObject="results"
+            input={{
+                label: 'Search Items',
+                placeholder: 'Mann Co. Supply Crate Key',
+            }}
+            mapFunction={(res: { sku: string }) => {
+                return {
+                    ...res,
+                    quality: res.sku.split(';')[1],
+                };
+            }}
+        />
+    );
+};
+
+const ItemResult: FunctionComponent<{
+    result: {
+        sku: string;
+        name: string;
+        quality: number;
+        image: { large: string; effect?: string };
+    };
+}> = ({ result }) => {
     const [fetching, setFetching] = useState(false);
     const router = useRouter();
 
     async function getLatestSnapshot() {
         setFetching(true);
 
-        const [data, error] = await fetcher(`/snapshots/overview/sku/${sku}`);
+        const [data, error] = await fetcher(
+            `/snapshots/overview/sku/${result.sku}`
+        );
 
         if (error) {
             setFetching(false);
@@ -157,12 +260,12 @@ const SearchItemComponent: FunctionComponent<{
     return (
         <div className="bg-gray-900 shadow-sm rounded-md p-2 text-gray-50 w-64">
             <div className="flex justify-center pt-2">
-                <ItemComponent image={image} quality={quality} />
+                <ItemComponent image={result.image} quality={result.quality} />
             </div>
 
             <div className="pt-2">
                 <h3 className="text-base sm:text-md lg:text-lg  text-white break-all text-center">
-                    {name}
+                    {result.name}
                 </h3>
             </div>
 
@@ -184,7 +287,7 @@ const SearchItemComponent: FunctionComponent<{
                     </a>
                 </div>
                 <div className="-ml-px w-0 flex-1 flex">
-                    <Link href={'/snapshots/' + sku}>
+                    <Link href={'/snapshots/' + result.sku}>
                         <a className="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-300 font-medium border border-transparent rounded-br-lg hover:text-white cursor-pointer">
                             <span className="ml-3">All</span>
                         </a>
