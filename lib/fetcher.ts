@@ -27,7 +27,7 @@ const fetcher = (
 
     if (snapshotKey) {
         // @ts-ignore
-        data.headers['SNAPSHOT_KEY'] = snapshotKey;
+        data.headers['X-SNAPSHOT-KEY'] = snapshotKey;
     }
 
     return fetch(url, data)
