@@ -60,6 +60,7 @@ export default function Donate() {
                         <li>Sunjar - 15 keys</li>
                         <li>Idinium - 10 keys</li>
                         <li>aj - 10 keys</li>
+                        <li>Preport - 5 euro</li>
                     </ul>
                 </div>
             </div>
