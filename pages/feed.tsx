@@ -19,7 +19,10 @@ export default function Home() {
         const addManySnapshots = (snapshotsArray: Snapshot[]) => {
             const copy = [...snapshots];
             for (let i = 0; i < snapshotsArray.length; i++) {
-                copy.unshift(snapshotsArray[i]);
+                copy.unshift({
+                    ...snapshotsArray[i],
+                    quality: parseInt(snapshotsArray[i].sku.split(';')[1]),
+                });
             }
             changeSnapshots(copy);
         };
@@ -37,6 +40,7 @@ export default function Home() {
         });
 
         socket.on('snapshot', (data: Snapshot) => {
+            console.log('new snapshot');
             snapshotGroup.push(data);
         });
 
@@ -46,7 +50,7 @@ export default function Home() {
                 snapshotGroup = [];
             }
         }, 1000);
-    }, [changeSnapshots, snapshots]);
+    }, []);
 
     return (
         <div>

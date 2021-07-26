@@ -2,6 +2,7 @@ import { CSSProperties } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getImageStyles } from '../lib/helpers';
+import Item from './Item';
 
 export interface Snapshot {
     image: {
@@ -15,23 +16,14 @@ export interface Snapshot {
         buy: number;
         sell: number;
     };
+    quality?: number;
 }
 
 export default function SnapshotPreview({ snapshot }: { snapshot: Snapshot }) {
     return (
         <Link href={'/snapshot/' + snapshot.id}>
-            <a className="p-2 cursor-pointer flex flex-wrap rounded-md shadow-sm hover:bg-gray-900 fast-transition">
-                <div
-                    className="item-image"
-                    style={getImageStyles(snapshot.image.effect)}
-                >
-                    <Image
-                        src={snapshot.image.large}
-                        alt="Item Image"
-                        height="64"
-                        width="64"
-                    />
-                </div>
+            <a className="p-2 cursor-pointer flex flex-wrap rounded-md shadow-sm hover:bg-gray-900 fast-transition gap-2">
+                <Item quality={snapshot.quality} image={snapshot.image} />
                 <div>
                     <p className="item-name text-left sm:text-center">
                         {snapshot.name}
