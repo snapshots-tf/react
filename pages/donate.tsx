@@ -90,7 +90,7 @@ export default function Donate() {
                             return (
                                 <li
                                     key={index}
-                                    className="flex flex-wrap justify-center"
+                                    className="flex flex-wrap justify-center gap-1"
                                 >
                                     <Link
                                         href={
