@@ -26,7 +26,7 @@ export default function Alert({
                                 'h-5 w-5',
                                 alert.type === 'info' ? 'text-blue-400' : '',
                                 alert.type === 'error' ? 'text-red-400' : '',
-                                alert.type === 'success' ? 'text-green-500' : ''
+                                alert.type === 'success' ? 'text-green-600' : ''
                             )}
                             aria-hidden="true"
                         />
