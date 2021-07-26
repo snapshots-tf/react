@@ -1,10 +1,39 @@
 import { HeartIcon } from '@heroicons/react/solid';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import Sidenav from '../components/Sidenav';
 import SEO from '../components/SEO';
 
 export default function Donate() {
+    const donators = [
+        {
+            name: 'Joekiller',
+            steamiD64: '76561197966563795',
+            donated: '$100',
+        },
+        {
+            name: 'Sunjar',
+            steamID64: '76561198139171368',
+            donated: '10 keys',
+        },
+        {
+            name: 'Idinium',
+            steamID64: '76561198013127982',
+            donated: '10 keys',
+        },
+        {
+            name: 'aj',
+            steamID64: '76561198253093948',
+            donated: '10 keys',
+        },
+        {
+            name: 'Preport',
+            steamID64: '76561198085810371',
+            donated: '$6',
+        },
+    ];
+
     return (
         <div>
             <SEO
@@ -57,10 +86,27 @@ export default function Donate() {
                         Donation Leaderboards
                     </p>
                     <ul className="text-lg">
-                        <li>Sunjar - 15 keys</li>
-                        <li>Idinium - 10 keys</li>
-                        <li>aj - 10 keys</li>
-                        <li>Preport - 5 euro</li>
+                        {donators.map((donator, index) => {
+                            return (
+                                <li
+                                    key={index}
+                                    className="flex flex-wrap justify-center"
+                                >
+                                    <Link
+                                        href={
+                                            'https://steamcommunity.com/profiles/' +
+                                            donator.steamID64
+                                        }
+                                    >
+                                        <a>{donator.name}</a>
+                                    </Link>
+                                    - {donator.donated}{' '}
+                                    <div className="flex-center pl-2">
+                                        <HeartIcon className="w-4 h-4 text-red-500" />
+                                    </div>
+                                </li>
+                            );
+                        })}
                     </ul>
                 </div>
             </div>
