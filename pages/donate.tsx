@@ -15,7 +15,7 @@ export default function Donate() {
         {
             name: 'Sunjar',
             steamID64: '76561198139171368',
-            donated: '10 keys',
+            donated: '15 keys',
         },
         {
             name: 'Idinium',
