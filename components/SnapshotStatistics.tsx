@@ -1,5 +1,6 @@
 import useSWR from 'swr';
 import CountUp from 'react-countup';
+import compactInteger from '../lib/compactInteger';
 
 import Alert from './Alert';
 import {
@@ -61,7 +62,10 @@ function Page() {
                                     end={item.stat}
                                     duration={4}
                                     formattingFn={(num) =>
-                                        num.toLocaleString('en')
+                                        compactInteger(
+                                            num,
+                                            num > 1000000 ? 3 : 2
+                                        )
                                     }
                                 />
                             </dd>
