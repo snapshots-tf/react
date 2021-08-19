@@ -125,3 +125,12 @@ body {
     background-color: #cfcfcf;
     border-color: #fafafa !important;
 }
+
+.navbar-item svg {
+    transition: 0.1s;
+    transform: scale(1);
+}
+
+.navbar-item:hover svg {
+    transform: scale(1.1);
+}
