@@ -35,6 +35,20 @@ export default function Home() {
             </Alert>
 
             <div className="mt-2">
+                <div className="bg-gray-900 shadow-sm rounded-lg overflow-hidden py-4 px-3">
+                    <h1 className="text-4xl font-bold">
+                        Welcome to Snapshots.TF!
+                    </h1>
+                    <p className="text-md font-semibold px-1">
+                        Snapshots.tf is your one-stop shop for searching,
+                        requesting, and viewing backpack.tf listing images. We
+                        boast over 4 million snapshot data points and are adding
+                        more every minute!
+                    </p>
+                </div>
+            </div>
+
+            <div className="mt-2">
                 <SnapshotStatistics></SnapshotStatistics>
             </div>
 
@@ -90,7 +104,7 @@ const SearchComponent: FunctionComponent<{
 
     return (
         <div>
-            <h1 className="text-xl leading-6 text-white font-semibold">
+            <h1 className="text-xl leading-6 text-white font-semibold px-1">
                 {title}
             </h1>
 
