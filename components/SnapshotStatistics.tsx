@@ -38,7 +38,7 @@ function Page() {
     return (
         <div>
             <div>
-                <h3 className="text-xl leading-6 text-white font-semibold">
+                <h3 className="text-xl leading-6 text-white font-semibold px-1">
                     Statistics
                 </h3>
                 <dl className="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-3">
