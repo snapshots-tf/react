@@ -1,8 +1,7 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { GetServerSideProps } from 'next';
 import nookies from 'nookies';
-export default function Home(
-    props: InferGetServerSidePropsType<typeof getServerSideProps>
-) {
+
+export default function Home() {
     return <div>Please wait</div>;
 }
 
@@ -22,8 +21,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     });
 
     return {
-        props: {
-            me,
+        redirect: {
+            permanent: true,
+            destination: '/',
         },
     };
 };
