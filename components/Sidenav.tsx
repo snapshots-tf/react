@@ -332,8 +332,6 @@ const UserAvatarBar: FunctionComponent<{
     user: { avatar: string; name: string } | null;
 }> = ({ user }) => {
     function logOut() {
-        localStorage.removeItem('user');
-
         window.location.href = '/auth/logout';
     }
 
@@ -368,7 +366,15 @@ const UserAvatarBar: FunctionComponent<{
                             {user?.name}
                         </p>
                         <div className="flex text-xs font-medium text-gray-300 group-hover:text-white gap-1">
-                            <a onClick={logOut}>Sign Out</a>-
+                            <a
+                                href={`${
+                                    process.env.NEXT_PUBLIC_API_URL ||
+                                    'https://api.snapshots.tf'
+                                }/auth/logout`}
+                            >
+                                Sign Out
+                            </a>
+                            -
                             <Link href="/profile">
                                 <a>My Profile</a>
                             </Link>

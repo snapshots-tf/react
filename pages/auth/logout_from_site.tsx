@@ -6,9 +6,10 @@ export default function Logout() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    nookies.destroy(ctx, 'snptf_user');
-    nookies.destroy(ctx, 'snapshots.tf');
-
+    nookies.destroy(ctx, 'snptf_user', {
+        maxAge: 60 * 60 * 24 * 7,
+        path: '/',
+    });
     return {
         redirect: {
             destination: '/',
