@@ -1,6 +1,7 @@
 import '../styles/globals.css';
 import 'tailwindcss/tailwind.css';
 
+import nookies, { parseCookies } from 'nookies';
 import App, { AppContext } from 'next/app';
 import type { AppProps } from 'next/app';
 
@@ -13,8 +14,8 @@ import { useEffect } from 'react';
 function MyApp({
     Component,
     pageProps,
-    hasCookies,
-}: AppProps & { hasCookies: boolean }) {
+    userData,
+}: AppProps & { userData: any }) {
     useEffect(() => {
         Confirm.init({
             titleColor: '#000000',
@@ -35,8 +36,8 @@ function MyApp({
                 height={5}
                 showOnShallow={true}
             />
-            <Sidenav hasCookies={hasCookies}>
-                <Component {...pageProps} hasCookies={hasCookies} />
+            <Sidenav userData={userData}>
+                <Component {...pageProps} userData={userData} />
             </Sidenav>
         </div>
     );
@@ -45,12 +46,37 @@ function MyApp({
 MyApp.getInitialProps = async (context: AppContext) => {
     const appProps = await App.getInitialProps(context);
 
-    // @ts-ignore
-    const hasCookies = true;
+    let userData;
+    try {
+        const user = JSON.parse(nookies.get(context.ctx)['snptf_user']);
+
+        if (user) userData = user;
+    } catch (err) {
+        try {
+            const parseCookie = (str: string) =>
+                str
+                    .split(';')
+                    .map((v: string) => v.split('='))
+                    .reduce((acc, v) => {
+                        // @ts-ignore
+                        acc[decodeURIComponent(v[0].trim())] =
+                            decodeURIComponent(v[1].trim());
+                        return acc;
+                    }, {});
+
+            const cookie = parseCookie(document.cookie) as {
+                snptf_user: string | undefined;
+            };
+
+            if (cookie['snptf_user']) {
+                userData = JSON.parse(decodeURIComponent(cookie['snptf_user']));
+            }
+        } catch (err) {}
+    }
 
     return {
         ...appProps,
-        hasCookies,
+        userData,
     };
 };
 

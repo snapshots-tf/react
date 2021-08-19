@@ -1,57 +1,29 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import nookies, { parseCookies } from 'nookies';
-import { useRouter } from 'next/router';
-import useSWR from 'swr';
-import { fetcher, swrFetcher } from '../../lib/fetcher';
-
+import nookies from 'nookies';
 export default function Home(
     props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
-    const cookies = parseCookies();
-
-    const router = useRouter();
-
-    fetcher('/me', 'GET', true, cookies['snapshots.tf']).then(
-        ([data, error]) => {
-            if (error) {
-                console.log('failed');
-                return <p>failed</p>;
-            }
-            if (!data) {
-                console.log('loading');
-                return <p>loading...</p>;
-            }
-            try {
-                localStorage.setItem('user', JSON.stringify(data));
-
-                console.log('Set user: ' + JSON.stringify(data));
-            } catch (err) {}
-
-            router.push('/?profile=true');
-
-            return <span>Redirecting</span>;
-        }
-    );
-
-    return <span>Fetching</span>;
+    return <div>Please wait</div>;
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    if (!ctx.query.cookie) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false,
+    const me = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL || 'https://api.snapshots.tf'}/me`,
+        {
+            headers: {
+                Cookie: 'snapshots.tf=' + ctx.req.cookies['snapshots.tf'],
             },
-        };
-    }
+        }
+    ).then((res) => res.json());
 
-    nookies.set(ctx, 'snapshots.tf', ctx.query.cookie.toString(), {
+    nookies.set(ctx, 'snptf_user', JSON.stringify(me), {
+        maxAge: 60 * 60 * 24 * 7,
         path: '/',
-        maxAge: 1209600000,
     });
 
     return {
-        props: {},
+        props: {
+            me,
+        },
     };
 };

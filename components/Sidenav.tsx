@@ -26,22 +26,12 @@ import { classNames } from '../lib/helpers';
 
 export default function Sidenav({
     children,
-    hasCookies,
+    userData,
 }: {
     children: ReactNode;
-    hasCookies: boolean;
+    userData: any;
 }) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [user, setUser] = useState<{
-        avatar: string;
-        steamID64: string;
-        name: string;
-    } | null>(null);
-
-    useEffect(() => {
-        if (localStorage.getItem('user') && !user && hasCookies)
-            setUser(JSON.parse(localStorage.getItem('user') || '{}'));
-    }, [user, setUser, hasCookies]);
 
     function GetActivePath(): string {
         const router = useRouter();
@@ -226,7 +216,7 @@ export default function Sidenav({
                                     </Link>
                                 </h3>
                             </div>
-                            <UserAvatarBar user={user} />
+                            <UserAvatarBar user={userData} />
                         </div>
                     </Transition.Child>
                     <div className="flex-shrink-0 w-14">
@@ -312,7 +302,7 @@ export default function Sidenav({
                                 </h3>
                             </div>
                         </div>
-                        <UserAvatarBar user={user} />
+                        <UserAvatarBar user={userData} />
                     </div>
                 </div>
             </div>
