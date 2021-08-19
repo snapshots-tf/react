@@ -1,7 +1,7 @@
 import '../styles/globals.css';
 import 'tailwindcss/tailwind.css';
 
-import nookies, { parseCookies } from 'nookies';
+import nookies from 'nookies';
 import App, { AppContext } from 'next/app';
 import type { AppProps } from 'next/app';
 
@@ -10,6 +10,9 @@ import Sidenav from '../components/Sidenav';
 
 import { Confirm } from 'notiflix';
 import { useEffect } from 'react';
+
+import * as gtag from '../lib/gtag';
+import { useRouter } from 'next/router';
 
 function MyApp({
     Component,
@@ -26,6 +29,18 @@ function MyApp({
             okButtonColor: '#ffffff',
         });
     }, []);
+
+    const router = useRouter();
+
+    useEffect(() => {
+        const handleRouteChange = (url: string) => {
+            gtag.pageview(url);
+        };
+        router.events.on('routeChangeComplete', handleRouteChange);
+        return () => {
+            router.events.off('routeChangeComplete', handleRouteChange);
+        };
+    }, [router.events]);
 
     return (
         <div>

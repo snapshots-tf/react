@@ -6,10 +6,14 @@ import Sidenav from '../components/Sidenav';
 import SEO from '../components/SEO';
 
 export default function Donate() {
-    const donators = [
+    const donators: {
+        name: string;
+        steamID64: string;
+        donated: string;
+    }[] = [
         {
             name: 'Joekiller',
-            steamiD64: '76561197966563795',
+            steamID64: '76561197966563795',
             donated: '$100',
         },
         {
@@ -77,7 +81,7 @@ export default function Donate() {
                         >
                             <div className="flex-center">
                                 <HeartIcon className="w-4 h-4 flex-center"></HeartIcon>
-                            </div>{' '}
+                            </div>
                             Steam Donation
                         </a>
                     </div>
