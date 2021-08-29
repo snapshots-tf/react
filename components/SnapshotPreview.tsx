@@ -25,7 +25,7 @@ export default function SnapshotPreview({ snapshot }: { snapshot: Snapshot }) {
             <a className="p-2 cursor-pointer flex flex-wrap rounded-md shadow-sm hover:bg-gray-900 fast-transition gap-2">
                 <Item quality={snapshot.quality} image={snapshot.image} />
                 <div>
-                    <p className="item-name text-left sm:text-center">
+                    <p className="item-name font-medium text-left sm:text-center">
                         {snapshot.name}
                     </p>
                     <div className="flex flex-wrap gap-1 flex-shrink-1 font-light">

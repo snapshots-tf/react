@@ -9,24 +9,11 @@ import SEO from '../components/SEO';
 import Alert from '../components/Alert';
 import SnapshotPreview, { Snapshot } from '../components/SnapshotPreview';
 
-export default function Home() {
+export default function Home(props) {
     let [connected, changeConnected] = useState<Boolean>(false);
     let [snapshots, changeSnapshots] = useState<Snapshot[]>([]);
 
     useEffect(() => {
-        let snapshotGroup: Snapshot[] = [];
-
-        const addManySnapshots = (snapshotsArray: Snapshot[]) => {
-            const copy = [...snapshots];
-            for (let i = 0; i < snapshotsArray.length; i++) {
-                copy.unshift({
-                    ...snapshotsArray[i],
-                    quality: parseInt(snapshotsArray[i].sku.split(';')[1]),
-                });
-            }
-            changeSnapshots((snapshots) => [...snapshots, ...copy]);
-        };
-
         const socket = io('https://api.snapshots.tf/');
 
         socket.on('connect', () => {
@@ -41,15 +28,9 @@ export default function Home() {
 
         socket.on('snapshot', (data: Snapshot) => {
             console.log('new snapshot');
-            snapshotGroup.push(data);
+            data.quality = parseInt(data.sku.split(';')[1]);
+            changeSnapshots((snapshots) => [data, ...snapshots]);
         });
-
-        setInterval(() => {
-            if (snapshotGroup.length !== 0) {
-                addManySnapshots(snapshotGroup);
-                snapshotGroup = [];
-            }
-        }, 1000);
     }, []);
 
     return (
