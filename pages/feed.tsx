@@ -1,15 +1,12 @@
-import { useEffect, useState } from 'react';
+import { ExclamationCircleIcon, WifiIcon } from '@heroicons/react/outline';
+import { FunctionComponent, useEffect, useState } from 'react';
 // @ts-ignore
 import io from 'socket.io-client';
-
-import { WifiIcon, ExclamationCircleIcon } from '@heroicons/react/outline';
-
-import Sidenav from '../components/Sidenav';
-import SEO from '../components/SEO';
 import Alert from '../components/Alert';
+import SEO from '../components/SEO';
 import SnapshotPreview, { Snapshot } from '../components/SnapshotPreview';
 
-export default function Home(props) {
+const Feed: FunctionComponent = ({}) => {
     let [connected, changeConnected] = useState<Boolean>(false);
     let [snapshots, changeSnapshots] = useState<Snapshot[]>([]);
 
@@ -63,4 +60,6 @@ export default function Home(props) {
             </div>
         </div>
     );
-}
+};
+
+export default Feed;
