@@ -24,7 +24,7 @@ export default function Home() {
                     quality: parseInt(snapshotsArray[i].sku.split(';')[1]),
                 });
             }
-            changeSnapshots(copy);
+            changeSnapshots((snapshots) => [...snapshots, ...copy]);
         };
 
         const socket = io('https://api.snapshots.tf/');
