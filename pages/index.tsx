@@ -1,20 +1,17 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { FunctionComponent, useState } from 'react';
-import { Notify } from 'notiflix';
-
-import { InformationCircleIcon, RefreshIcon } from '@heroicons/react/outline';
+import { InformationCircleIcon } from '@heroicons/react/outline';
 import { ExclamationCircleIcon } from '@heroicons/react/solid';
-
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { Notify } from 'notiflix';
+import { FunctionComponent, useState } from 'react';
 import Alert from '../components/Alert';
-import SnapshotStatistics from '../components/SnapshotStatistics';
-import SEO from '../components/SEO';
 import Input from '../components/Input';
 import ItemComponent from '../components/Item';
-
-import { fetcher } from '../lib/fetcher';
-import { useRouter } from 'next/router';
+import SEO from '../components/SEO';
+import SnapshotStatistics from '../components/SnapshotStatistics';
 import Spinner from '../components/Spinner';
+import { fetcher } from '../lib/fetcher';
 
 export default function Home() {
     const router = useRouter();
@@ -42,18 +39,18 @@ export default function Home() {
                     <p className="text-md font-semibold px-1">
                         Snapshots.tf is your one-stop shop for searching,
                         requesting, and viewing backpack.tf listing images. We
-                        boast over 4 million snapshot data points and are adding
+                        boast over 5 million snapshot data points and are adding
                         more every minute!
                     </p>
                 </div>
             </div>
 
             <div className="mt-2">
-                <SnapshotStatistics></SnapshotStatistics>
+                <SnapshotStatistics />
             </div>
 
             <div className="mt-2">
-                <SearchItemsComponent></SearchItemsComponent>
+                <SearchItemsComponent />
             </div>
 
             <div className="mt-2">
