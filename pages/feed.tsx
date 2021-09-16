@@ -1,4 +1,5 @@
 import { ExclamationCircleIcon, WifiIcon } from '@heroicons/react/outline';
+import { motion } from 'framer-motion';
 import { FunctionComponent, useEffect, useState } from 'react';
 // @ts-ignore
 import io from 'socket.io-client';
@@ -23,11 +24,16 @@ const Feed: FunctionComponent = ({}) => {
             changeConnected(false);
         });
 
-        socket.on('snapshot', (data: Snapshot) => {
-            console.log('new snapshot');
+        const handleSnapshot = (data: Snapshot) => {
             data.quality = parseInt(data.sku.split(';')[1]);
             changeSnapshots((snapshots) => [data, ...snapshots]);
-        });
+        };
+
+        socket.on('snapshot', handleSnapshot);
+
+        return () => {
+            socket.off('snapshot', handleSnapshot);
+        };
     }, []);
 
     return (
@@ -49,14 +55,23 @@ const Feed: FunctionComponent = ({}) => {
             </Alert>
 
             <div className="pt-2">
-                {snapshots.map((snapshot) => {
-                    return (
-                        <SnapshotPreview
-                            snapshot={snapshot}
-                            key={snapshot.id}
-                        ></SnapshotPreview>
-                    );
-                })}
+                <motion.div
+                    variants={{
+                        show: {
+                            opacity: 0,
+                            transition: { staggerChildren: 0.1 },
+                        },
+                    }}
+                >
+                    {snapshots.map((snapshot) => {
+                        return (
+                            <SnapshotPreview
+                                snapshot={snapshot}
+                                key={snapshot.id}
+                            ></SnapshotPreview>
+                        );
+                    })}
+                </motion.div>
             </div>
         </div>
     );
