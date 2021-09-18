@@ -1,4 +1,9 @@
-import { ExclamationCircleIcon } from '@heroicons/react/solid';
+import {
+    ArrowCircleDownIcon,
+    ArrowCircleUpIcon,
+    ArrowDownIcon,
+    ExclamationCircleIcon,
+} from '@heroicons/react/solid';
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -64,9 +69,14 @@ export default function Identifier({
 
             <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
                 <div>
-                    <p className="text-center text-lg font-medium">
-                        Sell Listings
-                    </p>
+                    <div className="flex justify-center gap-1">
+                        <ArrowCircleDownIcon className="h-8 w-8" />
+                        <div className="flex-center pb-1">
+                            <p className="text-center text-lg lg:text-xl font-semibold">
+                                Sell Listings
+                            </p>
+                        </div>
+                    </div>
                     {listings.sell.map((sellListing) => {
                         return (
                             <SnapshotListing
@@ -79,9 +89,14 @@ export default function Identifier({
                     })}
                 </div>
                 <div>
-                    <p className="text-center text-lg font-medium">
-                        Buy Listings
-                    </p>
+                    <div className="flex justify-center gap-1">
+                        <ArrowCircleUpIcon className="h-8 w-8" />
+                        <div className="flex-center pb-1">
+                            <p className="text-center text-lg lg:text-xl font-semibold">
+                                Buy Listings
+                            </p>
+                        </div>
+                    </div>
                     {listings.buy.map((buyListing) => {
                         return (
                             <SnapshotListing
