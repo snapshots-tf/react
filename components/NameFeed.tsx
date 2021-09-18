@@ -3,7 +3,13 @@ import { classNames } from '../lib/helpers';
 import { timeSince } from '../lib/time';
 import { APIUser } from '../pages/user/[identifier]';
 
-export default function NameFeed({ user }: { user: APIUser }) {
+export default function NameFeed({
+    user,
+    width,
+}: {
+    user: APIUser;
+    width: number;
+}) {
     const timeline = user.names.map((name) => {
         return {
             content: 'Changed name to',
@@ -14,7 +20,7 @@ export default function NameFeed({ user }: { user: APIUser }) {
     });
 
     return (
-        <div className="w-1/3 bg-gray-900 rounded-md shadow-sm p-2">
+        <div className="bg-gray-900 rounded-md shadow-sm p-2" style={{ width }}>
             <div className="text-center">
                 <h3 className="text-3xl font-semibold">User Name History</h3>
             </div>

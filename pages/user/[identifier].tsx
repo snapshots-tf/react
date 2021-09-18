@@ -1,16 +1,16 @@
 import {
     LineChart,
     Line,
-    CartesianGrid,
     XAxis,
     YAxis,
     Tooltip,
     Legend,
     TooltipProps,
 } from 'recharts';
+import { useEffect, useState } from 'react';
 
 import { ExternalLinkIcon } from '@heroicons/react/outline';
-import { ExclamationCircleIcon, SparklesIcon } from '@heroicons/react/solid';
+import { ExclamationCircleIcon } from '@heroicons/react/solid';
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 
@@ -20,6 +20,7 @@ import SEO from '../../components/SEO';
 import { timeSince } from '../../lib/time';
 import { CSSProperties } from 'react';
 import NameFeed from '../../components/NameFeed';
+import useWindowDimensions from '../../lib/useWindowDimensions';
 
 export interface APIUser {
     trusts: {
@@ -75,6 +76,11 @@ export default function Identifier({
         color: 'black',
     };
 
+    const windowDimensions = useWindowDimensions();
+
+    windowDimensions.width = windowDimensions.width - 30;
+
+    console.log(windowDimensions);
     return (
         <div>
             <SEO
@@ -118,7 +124,7 @@ export default function Identifier({
                 </div>
             </div>
 
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 justify-center md:justify-start">
                 <div className="bg-gray-900 rounded-md shadow-sm p-2">
                     <div className="text-center">
                         <h3 className="text-3xl font-semibold">
@@ -127,7 +133,11 @@ export default function Identifier({
                     </div>
 
                     <LineChart
-                        width={600}
+                        width={
+                            windowDimensions.width > 600
+                                ? 600
+                                : windowDimensions.width
+                        }
                         height={300}
                         data={data.trust}
                         margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
@@ -168,7 +178,11 @@ export default function Identifier({
                     </div>
 
                     <LineChart
-                        width={600}
+                        width={
+                            windowDimensions.width > 600
+                                ? 600
+                                : windowDimensions.width
+                        }
                         height={300}
                         data={data.suggestions}
                         margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
@@ -216,7 +230,11 @@ export default function Identifier({
                     </div>
 
                     <LineChart
-                        width={600}
+                        width={
+                            windowDimensions.width > 600
+                                ? 600
+                                : windowDimensions.width
+                        }
                         height={300}
                         data={data.donations}
                         margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
@@ -242,7 +260,14 @@ export default function Identifier({
                     </LineChart>
                 </div>
 
-                <NameFeed user={user}></NameFeed>
+                <NameFeed
+                    user={user}
+                    width={
+                        windowDimensions.width > 600
+                            ? 600
+                            : windowDimensions.width
+                    }
+                ></NameFeed>
             </div>
         </div>
     );
