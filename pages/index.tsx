@@ -27,8 +27,10 @@ export default function Home() {
                 description="Backpack.tf listing snapshots with an intuitive api and website."
             ></SEO>
 
-            <Alert alert={{ icon: InformationCircleIcon, type: 'info' }}>
-                Please report all bugs in our discord.
+            <Alert alert={{ type: 'warn', icon: ExclamationCircleIcon }}>
+                Snapshots.tf will be closing down due to lack of funding. Would
+                you like to help keep the project alive? Please contact
+                aethez#6403 to support the project!
             </Alert>
 
             <div className="mt-2">
@@ -39,7 +41,7 @@ export default function Home() {
                     <p className="text-md font-semibold px-1">
                         Snapshots.tf is your one-stop shop for searching,
                         requesting, and viewing backpack.tf listing images. We
-                        boast over 5 million snapshot data points and are adding
+                        boast over 9 million snapshot data points and are adding
                         more every minute!
                     </p>
                 </div>

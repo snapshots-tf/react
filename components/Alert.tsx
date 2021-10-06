@@ -6,7 +6,7 @@ export default function Alert({
     alert,
     children,
 }: {
-    alert: { icon: any; type: 'error' | 'success' | 'info' };
+    alert: { icon: any; type: 'error' | 'success' | 'info' | 'warn' };
     children: ReactNode;
 }) {
     return (
@@ -15,7 +15,8 @@ export default function Alert({
                 'rounded-md p-4',
                 alert.type === 'info' ? 'bg-blue-50' : '',
                 alert.type === 'error' ? 'bg-red-50' : '',
-                alert.type === 'success' ? 'bg-green-50' : ''
+                alert.type === 'success' ? 'bg-green-50' : '',
+                alert.type === 'warn' ? 'bg-yellow-50' : ''
             )}
         >
             <div className="flex">
@@ -26,7 +27,10 @@ export default function Alert({
                                 'h-5 w-5',
                                 alert.type === 'info' ? 'text-blue-400' : '',
                                 alert.type === 'error' ? 'text-red-400' : '',
-                                alert.type === 'success' ? 'text-green-600' : ''
+                                alert.type === 'success'
+                                    ? 'text-green-600'
+                                    : '',
+                                alert.type === 'warn' ? 'text-yellow-500' : ''
                             )}
                             aria-hidden="true"
                         />
@@ -40,7 +44,8 @@ export default function Alert({
                             'text-sm',
                             alert.type === 'info' ? 'text-blue-700' : '',
                             alert.type === 'success' ? 'text-green-600' : '',
-                            alert.type === 'error' ? 'text-red-500' : ''
+                            alert.type === 'error' ? 'text-red-500' : '',
+                            alert.type === 'warn' ? 'text-yellow-600' : ''
                         )}
                     >
                         {children}
