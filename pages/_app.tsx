@@ -5,16 +5,15 @@ import nookies from 'nookies';
 import App, { AppContext } from 'next/app';
 import type { AppProps } from 'next/app';
 
-import NextNprogress from 'nextjs-progressbar';
 import Sidenav from '../components/Sidenav';
 
 import { Confirm } from 'notiflix';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import * as gtag from '../lib/gtag';
 import { useRouter } from 'next/router';
 import { ExclamationCircleIcon } from '@heroicons/react/solid';
 import Alert from '../components/Alert';
+import FullpageLoader from '../components/FullpageLoader';
 
 function MyApp({
     Component,
@@ -33,26 +32,30 @@ function MyApp({
     }, []);
 
     const router = useRouter();
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const handleRouteChange = (url: string) => {
-            gtag.pageview(url);
-        };
-        router.events.on('routeChangeComplete', handleRouteChange);
+        const handleStart = (url: string) =>
+            url !== router.asPath && setLoading(true);
+        const handleComplete = (url: string) =>
+            url === router.asPath && setLoading(false);
+
+        router.events.on('routeChangeStart', handleStart);
+        router.events.on('routeChangeComplete', () => {
+            setLoading(false);
+        });
+        router.events.on('routeChangeError', handleComplete);
+
         return () => {
-            router.events.off('routeChangeComplete', handleRouteChange);
+            router.events.off('routeChangeStart', handleStart);
+            router.events.off('routeChangeComplete', handleComplete);
+            router.events.off('routeChangeError', handleComplete);
         };
-    }, [router.events]);
+    });
 
     return (
         <div>
-            <NextNprogress
-                color="#0000ff"
-                startPosition={0}
-                stopDelayMs={200}
-                height={5}
-                showOnShallow={true}
-            />
+            {!loading && <FullpageLoader />}
             <Sidenav userData={userData}>
                 <Alert alert={{ type: 'warn', icon: ExclamationCircleIcon }}>
                     Snapshots.tf will be closing down due to lack of funding.
