@@ -55,7 +55,7 @@ function MyApp({
 
     return (
         <div>
-            {!loading && <FullpageLoader />}
+            {loading && <FullpageLoader />}
             <Sidenav userData={userData}>
                 <Alert alert={{ type: 'warn', icon: ExclamationCircleIcon }}>
                     Snapshots.tf will be closing down due to lack of funding.
