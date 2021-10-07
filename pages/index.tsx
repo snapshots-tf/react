@@ -27,12 +27,6 @@ export default function Home() {
                 description="Backpack.tf listing snapshots with an intuitive api and website."
             ></SEO>
 
-            <Alert alert={{ type: 'warn', icon: ExclamationCircleIcon }}>
-                Snapshots.tf will be closing down due to lack of funding. Would
-                you like to help keep the project alive? Please contact
-                aethez#6403 to support the project!
-            </Alert>
-
             <div className="mt-2">
                 <div className="bg-gray-900 shadow-sm rounded-lg overflow-hidden py-4 px-3">
                     <h1 className="text-4xl font-bold">

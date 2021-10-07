@@ -9,10 +9,12 @@ import NextNprogress from 'nextjs-progressbar';
 import Sidenav from '../components/Sidenav';
 
 import { Confirm } from 'notiflix';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import * as gtag from '../lib/gtag';
 import { useRouter } from 'next/router';
+import { ExclamationCircleIcon } from '@heroicons/react/solid';
+import Alert from '../components/Alert';
 
 function MyApp({
     Component,
@@ -52,6 +54,12 @@ function MyApp({
                 showOnShallow={true}
             />
             <Sidenav userData={userData}>
+                <Alert alert={{ type: 'warn', icon: ExclamationCircleIcon }}>
+                    Snapshots.tf will be closing down due to lack of funding.
+                    Would you like to help keep the project alive? Please
+                    contact aethez#6403 to support the project!
+                </Alert>
+
                 <Component {...pageProps} userData={userData} />
             </Sidenav>
         </div>

@@ -12,7 +12,7 @@ export default function Alert({
     return (
         <div
             className={classNames(
-                'rounded-md p-4',
+                'rounded-md p-4 mb-1',
                 alert.type === 'info' ? 'bg-blue-50' : '',
                 alert.type === 'error' ? 'bg-red-50' : '',
                 alert.type === 'success' ? 'bg-green-50' : '',
