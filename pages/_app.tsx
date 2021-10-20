@@ -57,12 +57,6 @@ function MyApp({
         <div>
             {loading && <FullpageLoader />}
             <Sidenav userData={userData}>
-                <Alert alert={{ type: 'warn', icon: ExclamationCircleIcon }}>
-                    Snapshots.tf will be closing down due to lack of funding.
-                    Would you like to help keep the project alive? Please
-                    contact aethez#6403 to support the project!
-                </Alert>
-
                 <Component {...pageProps} userData={userData} />
             </Sidenav>
         </div>
