@@ -27,6 +27,11 @@ export default function Donate() {
             donated: '10 keys',
         },
         {
+            name: 'Purple Barber',
+            steamID64: '76561198104945873',
+            donated: '10 keys',
+        },
+        {
             name: 'aj',
             steamID64: '76561198253093948',
             donated: '10 keys',
