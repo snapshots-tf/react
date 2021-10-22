@@ -21,46 +21,8 @@ const Profile: FunctionComponent<{
     apiKey: string;
 }> = ({ user, apiKey }) => {
     const [showAPIKey, changeShowAPIKey] = useState(false);
-    const [testDefindex, changeTestDefindex] = useState<string>('');
-    const [isTesting, changeIsTesting] = useState(false);
 
     const router = useRouter();
-
-    async function testAPIKey(): Promise<void> {
-        if (testDefindex === '') return;
-
-        changeIsTesting(true);
-
-        const [data, error] = await fetcher(
-            '/request/' + testDefindex,
-            'POST',
-            false,
-            null,
-            apiKey
-        );
-
-        changeIsTesting(false);
-        if (error) {
-            Notify.failure(
-                'Failed to request that item to be snapshotted, the web server might be down!',
-                {
-                    timeout: 3000,
-                }
-            );
-        } else {
-            if (data.statusCode) {
-                Notify.failure(
-                    'Failed to request that item to be snapshotted: ' +
-                        data.message,
-                    { timeout: 3000 }
-                );
-            } else
-                Notify.success(
-                    'Successfully requested that item to be snapshotted!',
-                    { timeout: 3000 }
-                );
-        }
-    }
 
     async function requestAPIKey(): Promise<void> {
         console.log('Requesting');
@@ -137,7 +99,7 @@ const Profile: FunctionComponent<{
                                 className="shadow-sm text-gray-50 bg-gray-700 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-900 px-4 rounded-md"
                                 readOnly={true}
                                 value={apiKey}
-                                onClick={() => {}}
+                                onClick={() => { }}
                             />
 
                             <div className="mt-2 flex gap-1">
@@ -171,61 +133,21 @@ const Profile: FunctionComponent<{
                         </div>
                     </div>
                 ) : (
-                    <div className="mt-2">
-                        <button
-                            type="button"
-                            className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            onClick={requestAPIKey}
-                        >
-                            <KeyIcon
-                                className="-ml-1 mr-3 h-5 w-5"
-                                aria-hidden="true"
-                            />
-                            Request an API Key
-                        </button>
-                    </div>
-                )}
-            </div>
-            {apiKey ? (
-                <div className="w-full bg-gray-900 rounded-lg p-2 my-1">
-                    <div>
-                        <h5 className="text-xl ml-1">Test Your API Key</h5>
-
-                        <input
-                            type="text"
-                            className="shadow-sm text-gray-50 bg-gray-700 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-900 px-4 rounded-md"
-                            value={testDefindex}
-                            onChange={(el) =>
-                                changeTestDefindex(el.target.value)
-                            }
-                            placeholder="Item Defindex"
-                        />
-
-                        <div className="mt-1">
+                        <div className="mt-2">
                             <button
                                 type="button"
                                 className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                onClick={testAPIKey}
+                                onClick={requestAPIKey}
                             >
-                                {isTesting ? (
-                                    <RefreshIcon
-                                        className="-ml-1 mr-3 h-5 w-5 animate-spin"
-                                        aria-hidden="true"
-                                    />
-                                ) : (
-                                    <UploadIcon
-                                        className="-ml-1 mr-3 h-5 w-5"
-                                        aria-hidden="true"
-                                    />
-                                )}
-                                Test
-                            </button>
+                                <KeyIcon
+                                    className="-ml-1 mr-3 h-5 w-5"
+                                    aria-hidden="true"
+                                />
+                                Request an API Key
+                        </button>
                         </div>
-                    </div>
-                </div>
-            ) : (
-                ''
-            )}
+                    )}
+            </div>
         </div>
     );
 };

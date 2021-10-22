@@ -1,4 +1,3 @@
-import { InformationCircleIcon } from '@heroicons/react/outline';
 import { ExclamationCircleIcon } from '@heroicons/react/solid';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -35,7 +34,7 @@ export default function Home() {
                     <p className="text-md font-semibold px-1">
                         Snapshots.tf is your one-stop shop for searching,
                         requesting, and viewing backpack.tf listing images. We
-                        boast over 9 million snapshot data points and are adding
+                        boast over 12 million snapshot data points and are adding
                         more every minute!
                     </p>
                 </div>
@@ -121,14 +120,14 @@ const SearchComponent: FunctionComponent<{
                         An error occurred whilst trying to search the item.
                     </Alert>
                 ) : (
-                    <span></span>
-                )}
+                        <span></span>
+                    )}
 
                 {hasSearched && result.length === 0 ? (
                     <p>No results found 😭</p>
                 ) : (
-                    ''
-                )}
+                        ''
+                    )}
 
                 <div className="flex flex-wrap gap-1">
                     {result.map((result, index) => {
@@ -288,8 +287,8 @@ const ItemResult: FunctionComponent<{
                         {fetching ? (
                             <Spinner borderClass="border-gray-50" />
                         ) : (
-                            ''
-                        )}
+                                ''
+                            )}
                         <span className="ml-3">Latest</span>
                     </a>
                 </div>

@@ -18,6 +18,7 @@ module.exports = {
             white: colors.white,
             indigo: colors.indigo,
             green: colors.green,
+            'gray-850': '#1b2430',
         },
         extend: {},
     },

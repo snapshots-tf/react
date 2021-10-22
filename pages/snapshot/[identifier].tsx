@@ -1,26 +1,14 @@
-import {
-    ArrowCircleDownIcon,
-    ArrowCircleUpIcon,
-    ArrowDownIcon,
-    ExclamationCircleIcon,
-} from '@heroicons/react/solid';
+import { ArrowCircleDownIcon, ArrowCircleUpIcon } from '@heroicons/react/solid';
 import { GetServerSideProps } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
-import { CSSProperties, FunctionComponent } from 'react';
-
-import SEO from '../../components/SEO';
+import { FC, FunctionComponent } from "react";
 import Item from '../../components/Item';
-
+import SEO from '../../components/SEO';
 import SnapshotListing from '../../components/SnapshotListing';
 import { getImageStyles } from '../../lib/helpers';
 import { timeSince } from '../../lib/time';
 
-export default function Identifier({
-    snapshot,
-    item,
-    listings,
-}: {
+const Identifier: FC<{
     snapshot: {
         savedAt: number;
         sku: string;
@@ -40,16 +28,16 @@ export default function Identifier({
         sku: string;
         quality: number;
     };
-}) {
+}> = ({ snapshot, item, listings }) => {
     return (
         <div>
             <SEO
                 title={'Snapshots for ' + item.name + ' - Snapshots.TF'}
                 description={`Have you ever dreamed of getting to know what backpack.tf listings looked like for ${
                     item.name
-                }'s ${timeSince(
-                    snapshot.savedAt
-                )} ago? Well here is your chance to see!`}
+                    }'s ${timeSince(
+                        snapshot.savedAt
+                    )} ago? Well here is your chance to see!`}
                 image={item.image.large}
             ></SEO>
 
@@ -145,7 +133,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     const snapshot = await fetch(
         `${
-            process.env.NEXT_PUBLIC_API_URL || 'https://api.snapshots.tf'
+        process.env.NEXT_PUBLIC_API_URL || 'https://api.snapshots.tf'
         }/snapshot/id/${identifier}`
     ).then((res) => res.json());
 
@@ -153,13 +141,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     const item = await fetch(
         `${
-            process.env.NEXT_PUBLIC_API_URL || 'https://api.snapshots.tf'
+        process.env.NEXT_PUBLIC_API_URL || 'https://api.snapshots.tf'
         }/item-info/${snapshot.sku}`
     ).then((res) => res.json());
 
     const users = await fetch(
         `${
-            process.env.NEXT_PUBLIC_API_URL || 'https://api.snapshots.tf'
+        process.env.NEXT_PUBLIC_API_URL || 'https://api.snapshots.tf'
         }/users/snapshot/${snapshot.id}`
     )
         .then((res) => res.json())
@@ -167,7 +155,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     const mapFunction = (listing: any) => {
         for (let i = 0; i < users.length; i++) {
-            if (users[i]?.steamID64 === listing.steamID64) {
+            if (users[i] ?.steamID64 === listing.steamID64) {
                 listing.user = {
                     name: users[i].name,
                     avatar: users[i].avatar,
@@ -194,3 +182,5 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         },
     };
 };
+
+export default Identifier;
