@@ -4,6 +4,10 @@ body {
     margin: 0;
 }
 
+.snapshot-num {
+    font-family: 'Bebas Neue', cursive;
+}
+
 .user-banner {
     max-height: 64px;
 }
