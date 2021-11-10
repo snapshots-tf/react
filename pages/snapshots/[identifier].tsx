@@ -91,7 +91,11 @@ const Identifier: FC<{ snapshots: SnapshotOverview }> = ({ snapshots }) => {
 
             <div className="text-center">
                 <div className="static lg:absolute font-medium text-sm text-gray-50 hover:text-white">
-                    <p>{newViewEnabled ? 'Use table view' : 'Use grid view'}</p>
+                    <p>
+                        {newViewEnabled
+                            ? 'Using grid view'
+                            : 'Using table view'}
+                    </p>
                     <div className="flex lg:justify-start justify-center">
                         <ViewSwitch
                             onChange={(enabled) => {
