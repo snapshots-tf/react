@@ -211,7 +211,7 @@ export default function Sidenav({
                                     </Link>
                                     <br />
                                     Funded by{' '}
-                                    <Link href="https://viggo.cc">
+                                    <Link href="https://steamcommunity.com/profiles/76561198111437100">
                                         <a>Paladin</a>
                                     </Link>
                                     <br />
@@ -298,6 +298,11 @@ export default function Sidenav({
                                     Made by{' '}
                                     <Link href="https://viggo.cc">
                                         <a>aethez</a>
+                                    </Link>
+                                    <br />
+                                    Funded by{' '}
+                                    <Link href="https://steamcommunity.com/profiles/76561198111437100">
+                                        <a>Paladin</a>
                                     </Link>
                                     <br />
                                     Powered by{' '}
