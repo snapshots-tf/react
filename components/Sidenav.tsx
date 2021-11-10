@@ -210,6 +210,11 @@ export default function Sidenav({
                                         <a>aethez</a>
                                     </Link>
                                     <br />
+                                    Funded by{' '}
+                                    <Link href="https://viggo.cc">
+                                        <a>Paladin</a>
+                                    </Link>
+                                    <br />
                                     Powered by{' '}
                                     <Link href="https://backpack.tf/">
                                         <a>Backpack.TF</a>
