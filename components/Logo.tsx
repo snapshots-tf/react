@@ -18,8 +18,8 @@ const Logo: FC = () => {
                     y2="109.32"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop offset="0" stop-color="#64748b" />
-                    <stop offset="1" stop-color="#475569" />
+                    <stop offset="0" stopColor="#64748b" />
+                    <stop offset="1" stopColor="#475569" />
                 </linearGradient>
                 <linearGradient
                     id="overtone_9"
