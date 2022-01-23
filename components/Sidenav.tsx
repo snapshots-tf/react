@@ -20,9 +20,10 @@ import {
     DatabaseIcon,
 } from '@heroicons/react/outline';
 
-import SnapshotsLogo from '../public/logo.webp';
+import SnapshotsLogo from '../public/logo.svg';
 import { useRouter } from 'next/dist/client/router';
 import { classNames } from '../lib/helpers';
+import Logo from './Logo';
 
 export default function Sidenav({
     children,
@@ -147,12 +148,9 @@ export default function Sidenav({
                                 <Link href="/">
                                     <a>
                                         <div className="flex-shrink-0 flex items-center px-4">
-                                            <Image
-                                                src={SnapshotsLogo}
-                                                alt="Snapshots Logo"
-                                                width="44"
-                                                height="44"
-                                            />
+                                            <div className="w-10 h-10">
+                                                <Logo />
+                                            </div>
                                             <h3 className="text-2xl pb-1 pr-2 text-gray-50 font-bold tracking-tight">
                                                 Snapshots.TF
                                             </h3>
@@ -239,13 +237,10 @@ export default function Sidenav({
                             <Link href="/">
                                 <a>
                                     <div className="flex items-center flex-shrink-0 px-4">
-                                        <Image
-                                            src={SnapshotsLogo}
-                                            alt="Snapshots Logo"
-                                            width="44"
-                                            height="44"
-                                        />
-                                        <h3 className="text-2xl pb-1 pr-2 text-gray-50 font-bold tracking-tight">
+                                        <div className="w-10 h-10">
+                                            <Logo />
+                                        </div>
+                                        <h3 className="text-2xl pb-1 pl-2 text-gray-50 font-bold tracking-tight">
                                             Snapshots.TF
                                         </h3>
                                     </div>

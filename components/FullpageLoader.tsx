@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { FC } from 'react';
+import Logo from './Logo';
 
 const FullpageLoader: FC = () => {
     return (
@@ -12,22 +13,20 @@ const FullpageLoader: FC = () => {
         >
             <div>
                 <motion.div
-                    style={{
-                        height: '50px',
-                        background: '#5866D7',
-                        width: '50px',
-                        borderRadius: '2% 50%',
-                    }}
                     animate={{
-                        rotate: 360,
-                        borderRadius: ['50% 50%', '10% 10%'],
+                        rotate: [90, -90, 90, -90, 90, -90, 90, -90],
+                        scale: [1, 1, 0.6, 0.8, 0.6, 1, 1],
                     }}
                     transition={{
                         flip: Infinity,
-                        duration: 1,
+                        duration: 1.8,
                         ease: 'easeInOut',
                     }}
-                ></motion.div>
+                >
+                    <div className="w-16 h-16">
+                        <Logo></Logo>
+                    </div>
+                </motion.div>
             </div>
         </motion.div>
     );

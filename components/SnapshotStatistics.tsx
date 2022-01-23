@@ -27,12 +27,19 @@ function Page() {
                 Failed to fetch snapshot statistics!
             </Alert>
         );
-    if (!data) return <div>loading...</div>;
 
     const stats = [
-        { name: 'Total Listings', stat: data.listings, icon: AnnotationIcon },
-        { name: 'Total Snapshots', stat: data.snapshots, icon: BookOpenIcon },
-        { name: 'Total Users', stat: data.users, icon: UserIcon },
+        {
+            name: 'Total Listings',
+            stat: data?.listings || 0,
+            icon: AnnotationIcon,
+        },
+        {
+            name: 'Total Snapshots',
+            stat: data?.snapshots || 0,
+            icon: BookOpenIcon,
+        },
+        { name: 'Total Users', stat: data?.users || 0, icon: UserIcon },
     ];
 
     return (

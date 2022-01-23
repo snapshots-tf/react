@@ -138,3 +138,22 @@ body {
 .navbar-item:hover svg {
     transform: scale(1.1);
 }
+
+.cls-1 {
+    fill: url(#overtone_3);
+}
+.cls-2 {
+    fill: url(#overtone_9);
+}
+.cls-3 {
+    fill: url(#overtone_10);
+}
+.cls-4 {
+    fill: url(#overtone_6);
+}
+.cls-5 {
+    fill: url(#overtone_7);
+}
+.cls-6 {
+    fill: url(#overtone_8);
+}
