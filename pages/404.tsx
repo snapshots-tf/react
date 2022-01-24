@@ -20,12 +20,12 @@ export default function Home() {
                     <Image src={SadCheems} height="128" width="200" alt="" />
                 </div>
                 <div className="text-center">
-                    <h1 className="text-5xl font-bold tracking-wider">
+                    <h1 className="text-5xl font-extrabold">
                         404 - Page Not Found
                     </h1>
                     <p className="text-lg my-2">How did you end up here?</p>
                     <Link href="/">
-                        <a className="bg-gray-900 rounded-md shadow-sm p-2 px-3 mt-2 text-lg font-semibold">
+                        <a className="bg-gray-900 rounded-md shadow-sm py-3 px-5 mt-2 text-lg font-semibold uppercase">
                             Go Home
                         </a>
                     </Link>
