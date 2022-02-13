@@ -1,4 +1,4 @@
-import { NextApiRequestCookies } from 'next/dist/next-server/server/api-utils';
+import { NextApiRequestCookies } from 'next/dist/server/api-utils';
 
 const swrFetcher = (url: any) =>
     fetch(url, { credentials: 'include' }).then((r) => r.json());
