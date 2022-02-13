@@ -47,9 +47,7 @@ export default function Donate() {
         <div>
             <SEO
                 title="Donate - Snapshots.TF"
-                description="Wish to support Snapshots.TF and it&lsquo;s development? Well
-                        here is your chance! There are currently two ways of
-                        donating, you can choose to use Steam or Kofi."
+                description="Wish to support Snapshots.TF and it&lsquo;s development and operations? Please send steam donations"
             ></SEO>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,26 +56,12 @@ export default function Donate() {
                         Wish to donate?
                     </p>
                     <p className="max-w-xl mt-5 mx-auto text-xl text-gray-100">
-                        Wish to support Snapshots.TF and it&lsquo;s development?
-                        Well here is your chance! There are currently two ways
-                        of donating, you can choose to use Steam or Kofi.
+                        Wish to support Snapshots.TF and it&lsquo;s development and operations?
+                        Well here is your chance! We are currently accepting Steam
+                        donations.
                     </p>
 
                     <div className="pt-4 flex flex-wrap justify-center gap-1">
-                        <a
-                            href="https://ko-fi.com/P5P532FL3"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            <Image
-                                height="36"
-                                width="150"
-                                src={'https://cdn.ko-fi.com/cdn/kofi3.png?v=2'}
-                                className="kofi"
-                                alt="Buy Me a Coffee at ko-fi.com"
-                            />
-                        </a>
-
                         <a
                             href="https://steamcommunity.com/tradeoffer/new/?partner=442990671&token=dKtwabFW"
                             target="_blank"
@@ -92,7 +76,10 @@ export default function Donate() {
                     </div>
 
                     <p className="mt-2 text-3xl sm:text-4xl sm:tracking-tight lg:text-5xl text-white font-extrabold">
-                        Donation Leaderboards
+                        Donation Legends
+                    </p>
+                    <p className="max-w-xl mt-5 mx-auto text-xl text-gray-100">
+                        The Donation Legends are those who donated to the original Snapshots.tf. Thank you everyone.
                     </p>
                     <ul className="text-lg">
                         {donators.map((donator, index) => {

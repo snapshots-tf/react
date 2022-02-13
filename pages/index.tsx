@@ -205,7 +205,7 @@ const SearchUsersComponent: FunctionComponent = () => {
             resultObject="users"
             input={{
                 label: 'Search Users',
-                placeholder: 'aethez',
+                placeholder: 'joekiller',
             }}
         />
     );

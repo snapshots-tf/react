@@ -73,12 +73,12 @@ export default function Sidenav({
             split: 'Dev',
             current: false,
         },
-        {
-            name: 'Users',
-            href: '/users',
-            icon: ChartBarIcon,
-            current: GetActivePath() === '/users',
-        },
+        // {
+        //     name: 'Users',
+        //     href: '/users',
+        //     icon: ChartBarIcon,
+        //     current: GetActivePath() === '/users',
+        // },
         {
             name: 'Overview',
             href: '/overview',
@@ -203,12 +203,17 @@ export default function Sidenav({
                                     className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider"
                                     id="projects-headline"
                                 >
-                                    Made by{' '}
+                                    Presented by{' '}
+                                    <Link href="https://joekiller.com">
+                                        <a>joekiller</a>
+                                    </Link>
+                                    <br />
+                                    Created by{' '}
                                     <Link href="https://viggo.cc">
                                         <a>aethez</a>
                                     </Link>
                                     <br />
-                                    Funded by{' '}
+                                    Special Thanks to{' '}
                                     <Link href="https://steamcommunity.com/profiles/76561198111437100">
                                         <a>Paladin</a>
                                     </Link>
@@ -290,12 +295,17 @@ export default function Sidenav({
                                     className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider"
                                     id="projects-headline"
                                 >
-                                    Made by{' '}
+                                    Presented by{' '}
+                                    <Link href="https://joekiller.com">
+                                        <a>joekiller</a>
+                                    </Link>
+                                    <br />
+                                    Created by{' '}
                                     <Link href="https://viggo.cc">
                                         <a>aethez</a>
                                     </Link>
                                     <br />
-                                    Funded by{' '}
+                                    Special Thanks to{' '}
                                     <Link href="https://steamcommunity.com/profiles/76561198111437100">
                                         <a>Paladin</a>
                                     </Link>
